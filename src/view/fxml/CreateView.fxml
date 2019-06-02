@@ -90,12 +90,16 @@
                      </font>
                   </Label>
                   <ListView fx:id="ingredientView" prefHeight="195.0" prefWidth="580.0" />
-                  <Label prefWidth="580.0" text="Preparation Steps:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="stepView" prefHeight="195.0" prefWidth="580.0" />
+                  
+                  <VBox fx:id="stepBox" prefHeight="195.0" prefWidth="580.0" >
+	                  <children>
+		                  <Label prefWidth="580.0" text="Preparation Steps:">
+		                     <font>
+		                        <Font name="System Bold" size="13.0" />
+		                     </font>
+		                  </Label>
+		              </children>
+                  </VBox>
                </children>
             </VBox>
          </children>

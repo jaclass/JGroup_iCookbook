@@ -13,13 +13,27 @@ public class PreparationStep implements Serializable{
 	private static final long serialVersionUID = -2826246357448488550L;
 	
 	private String detail;
+	private int step;
 	
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
+
 	/**
 	 * Constructor with detail.
 	 * 
 	 * @param detail The detail of the preparation step.
 	 */
 	public PreparationStep(String detail) {
+		this.detail = detail;
+	}
+	
+	public PreparationStep(int step,String detail) {
+		this.step = step;
 		this.detail = detail;
 	}
 	

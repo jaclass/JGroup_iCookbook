@@ -2,18 +2,26 @@ package controller.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import controller.db.DBController;
+import entity.PreparationStep;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.customized.PreparationStepBox;
 
 public class CreateViewController implements Initializable{
-	
+	@FXML private VBox stepBox;
 	private String username;
 	
 	public void initData(String username) {
@@ -56,6 +64,8 @@ public class CreateViewController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		List<PreparationStep> preps = DBController.getPreparationStepsOfRecipe(1);
+		(new PreparationStepBox(preps,this.stepBox,1)).generate();
 	}
 
 }

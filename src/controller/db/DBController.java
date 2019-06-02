@@ -48,7 +48,32 @@ public class DBController {
 	    
 	    return ret;
 	}
-	
+	/**
+	 * Insert PreparationStep. Update the step = step+1 behind the inserted step
+	 * 
+	 * @param ps PreparationStep PreaprationStep to be inserted.
+	 * @param recipe_id Foreign key for the PreparationStep.
+	 * @param step Order of the PreparationStep in the recipe.
+	 * @return Updated rows.
+	 */
+	public static int updatePreparationStep(int recipe_id, int step, String detail) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		String sql = "update preparation_step set detail=? where recipe_id=? and step=?";
+		int ret = 0;
+		try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, detail);
+	        pstmt.setInt(2, recipe_id);
+	        pstmt.setInt(3, step);
+	        ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+			DBUtils.close(pstmt, conn);
+		}
+		return ret;
+	}
 	/**
 	 * Insert PreparationStep. Update the step = step+1 behind the inserted step
 	 * 
@@ -337,7 +362,7 @@ public class DBController {
 	        pstmt.setObject(1, recipeId);
 	        rs = pstmt.executeQuery();
 	        while(rs.next()) {
-	        	PreparationStep step = new PreparationStep(rs.getString(3));
+	        	PreparationStep step = new PreparationStep(rs.getInt(2),rs.getString(3));
 	        	result.add(step);
 	        }
 	    } catch (SQLException e) {

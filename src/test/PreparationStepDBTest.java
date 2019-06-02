@@ -19,6 +19,8 @@ class PreparationStepDBTest {
 	void test() {
 		DBController.insertPreparationStep(1, 5, new PreparationStep("inserted prepStep"));
 		DBController.deletePreparationStep(1, 5);
+		DBController.updatePreparationStep(1, 3, 
+				"mix together the remaining 3 tbsp. soy sauce, rice wine, sugar, stock, vinegar, sesame oil, and dark soy sauce.");
 	}
 
 }
