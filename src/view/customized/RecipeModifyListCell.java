@@ -2,7 +2,8 @@ package view.customized;
 
 import java.io.IOException;
 
-import controller.view.RecipeViewController;
+import controller.db.DBController;
+import controller.view.CreateViewController;
 import entity.Recipe;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -26,16 +27,16 @@ import javafx.stage.Stage;
  * @author JGroup
  *
  */
-public class RecipeListCell extends ListCell<Recipe>{
-
+public class RecipeModifyListCell extends ListCell<Recipe>{
+	
 	private String username;
-
+	
 	/**
 	 * Constructor to receive the username.
 	 * 
 	 * @param username Username.
 	 */
-	public RecipeListCell(String username) {
+	public RecipeModifyListCell(String username) {
 		super();
 		this.username = username;
 	}
@@ -66,14 +67,13 @@ public class RecipeListCell extends ListCell<Recipe>{
         	Label cookingTimeTitle = new Label();
         	Label cookingTimeLabel = new Label();
         	Label unit = new Label();
-        	
         	recipeNameLabel.setFont(new Font(20));
         	recipeNameLabel.setText(item.getRecipeName());
         	
         	authorLabel.setText(item.getAuthor());
         	authorTitle.setText("Author: ");
-        	HBox authoHBox = new HBox();
-        	authoHBox.getChildren().addAll(authorTitle, authorLabel);
+        	HBox authorBox = new HBox();
+        	authorBox.getChildren().addAll(authorTitle, authorLabel);
         	
         	serveNumTitle.setText("Serve Number: ");
         	serveNumLabel.setText(String.valueOf(item.getServeNum()));
@@ -86,39 +86,50 @@ public class RecipeListCell extends ListCell<Recipe>{
         	HBox amountHBox = new HBox();
         	amountHBox.getChildren().addAll(serveNumTitle, serveNumLabel, preparationTimeTitle, preparationTimeLabel, cookingTimeTitle, cookingTimeLabel, unit);
         	
-        	Button viewButton = new Button("View");
-        	viewButton.setPrefWidth(60);
-        	viewButton.setOnAction(e -> {
-        		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/RecipeView.fxml"));
-        		Parent recipeViewParent = null;
-				try {
-					recipeViewParent = loader.load();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-        		
-        		Scene recipeViewScene = new Scene(recipeViewParent);
-        		
-        		// This line gets the Stage information.
-        		Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
-        		
-        		window.setScene(recipeViewScene);
-        		window.show();
-        		
-        		// Access the controller and call a method.
-                RecipeViewController controller = loader.getController();
-                controller.initData(item, username);
-        	});
+        	Button editButton = new Button("Edit");
+        	editButton.setPrefWidth(60);
+        	Button deleteButton = new Button("Delete");
+        	deleteButton.setPrefWidth(60);
         	
         	HBox buttonBox = new HBox(10);
         	buttonBox.setPrefWidth(370);
         	buttonBox.setPadding(new Insets(10, 0, 0, 0));
         	buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
-        	buttonBox.getChildren().addAll(viewButton);
+        	buttonBox.getChildren().addAll(editButton, deleteButton);
         	
-        	VBox infoVBox = new VBox();
+        	editButton.setOnAction(e -> {
+            	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
+        		Parent createViewParent = null;
+				try {
+					createViewParent = loader.load();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+        		
+                Scene createViewScene = new Scene(createViewParent);
+                
+                // This line gets the Stage information.
+                Stage window = (Stage)((Node)e.getSource()).getScene().getWindow();
+                
+                window.setScene(createViewScene);
+                window.show();
+                
+        		// Access the controller and call a method.
+                CreateViewController controller = loader.getController();
+                controller.initData(username);
+        	});
+        	deleteButton.setOnAction(e -> {
+            	Boolean answer = ConfirmBox.display("Delete Recipe", "Are you sure to delete the recipe?");
+            	
+            	if (answer) {
+            		getListView().getItems().remove(getItem());
+            		DBController.deleteRecipe(item);
+        		}
+        	});
+        	
+        	VBox infoVBox = new VBox(5);
         	infoVBox.setAlignment(Pos.CENTER_LEFT);
-        	infoVBox.getChildren().addAll(recipeNameLabel, authoHBox, amountHBox, buttonBox);
+        	infoVBox.getChildren().addAll(recipeNameLabel, authorBox, amountHBox, buttonBox);
         	
         	HBox recipeHBox = new HBox(10);
         	recipeHBox.setId("recipe-box");

@@ -1,16 +1,13 @@
-/**
- * 
- */
 package test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import controller.db.DBController;
 import entity.PreparationStep;
 
 /**
- * @author 39873
+ * Test the methods about the preparation steps.
+ * 
+ * @author JGroup
  *
  */
 class PreparationStepDBTest {

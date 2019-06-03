@@ -22,6 +22,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import view.customized.RecipeListCell;
 
+/**
+ * Controller for HomeView.
+ * 
+ * @author JGroup
+ *
+ */
 public class HomeViewController implements Initializable {
 
 	private String username;
@@ -31,34 +37,33 @@ public class HomeViewController implements Initializable {
 	@FXML private Label authorLabel;
 	@FXML private TextField searchField;
 	
+	/**
+	 * Constructor.
+	 */
 	public HomeViewController() {
 		recipes = FXCollections.observableArrayList();
 		recipes.clear();
 		recipes.addAll(DBController.getAllRecipes());
 	}
 	
+	/**
+	 * Initialize the view.
+	 * 
+	 * @param username Username.
+	 */
 	public void initData(String username) {
 		this.username = username;
 		authorLabel.setText(username);
+		
+		showAllRecipes(username);
 	}
-	
-	public void itemMouseClicked(MouseEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/RecipeView.fxml"));
-		Parent recipeViewParent = loader.load();
-		
-		Scene recipeViewScene = new Scene(recipeViewParent);
-		
-		// This line gets the Stage information.
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
-		window.setScene(recipeViewScene);
-		window.show();
-		
-		// Access the controller and call a method.
-        RecipeViewController controller = loader.getController();
-        controller.initData(recipeListView.getSelectionModel().getSelectedItem(), username);
-	}
-	
+
+	/**
+	 * When the button clicked, go to UserOwnView.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
 	public void usernameMouseClicked(MouseEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/UserOwnView.fxml"));
 		Parent userOwnViewParent = loader.load();
@@ -76,20 +81,29 @@ public class HomeViewController implements Initializable {
         controller.initData(username);
 	}
 	
+	/**
+	 * When push the button, then search for the recipe.
+	 * 
+	 * @param event
+	 */
 	public void searchButtonPushed(ActionEvent event) {
 		recipes.clear();
 		recipes.addAll(DBController.searchRecipeByName(searchField.getText()));
 		
 		recipeListView.getItems().clear();
 		recipeListView.getItems().addAll(recipes);
-		recipeListView.setCellFactory(param -> new RecipeListCell());
+		recipeListView.setCellFactory(param -> new RecipeListCell(username));
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	
+	/**
+	 * Show all recipes.
+	 * 
+	 * @param username Username
+	 */
+	private void showAllRecipes(String username) {
 		// Configuring the ListView.
 		recipeListView.getItems().addAll(recipes);
-		recipeListView.setCellFactory(param -> new RecipeListCell());
+		recipeListView.setCellFactory(param -> new RecipeListCell(username));
 		// The same like:
 		/*
 		recipeListView.setCellFactory(new Callback<ListView<Recipe>, ListCell<Recipe>>() {
@@ -98,7 +112,14 @@ public class HomeViewController implements Initializable {
 		        return new RecipeListCell();
 		    }
 		});
-		*/
+		*/		
+	}
+
+	/**
+	 * Initialize the view.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 	}
 
 }

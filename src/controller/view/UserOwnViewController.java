@@ -16,10 +16,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import view.listcell.RecipeListCell;
+import view.customized.ConfirmBox;
+import view.customized.RecipeModifyListCell;
 
+/**
+ * Controller for UserOwnView.
+ * 
+ * @author JGroup
+ *
+ */
 public class UserOwnViewController implements Initializable{
 	
 	private String username;
@@ -27,6 +33,11 @@ public class UserOwnViewController implements Initializable{
 	
 	@FXML private ListView<Recipe> recipeListView;
     
+    /**
+     * Initialize the data.
+     * 
+     * @param username Username.
+     */
     public void initData(String username) {
     	this.username = username;
     	
@@ -36,9 +47,15 @@ public class UserOwnViewController implements Initializable{
     	
     	recipeListView.getItems().clear();
     	recipeListView.getItems().addAll(userRecipes);
-    	recipeListView.setCellFactory(param -> new RecipeListCell());
+    	recipeListView.setCellFactory(param -> new RecipeModifyListCell(username));
     }
 	
+    /**
+     * When push the button, change to HomeView.
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void backButtonPushed(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/HomeView.fxml"));
 		Parent homeViewParent = loader.load();
@@ -56,19 +73,35 @@ public class UserOwnViewController implements Initializable{
         controller.initData(username);
     }
     
+    /**
+     * When push the button, change to LoginView.
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void logoutButtonPushed(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/LoginView.fxml"));
-		Parent loginViewParent = loader.load();
-		
-        Scene loginViewScene = new Scene(loginViewParent);
-        
-        // This line gets the Stage information.
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
-        window.setScene(loginViewScene);
-        window.show();
+    	Boolean answer = ConfirmBox.display("Sign Out", "Are you sure to sign out?");
+    	
+    	if (answer) {
+    		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/LoginView.fxml"));
+    		Parent loginViewParent = loader.load();
+    		
+    		Scene loginViewScene = new Scene(loginViewParent);
+    		
+    		// This line gets the Stage information.
+    		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    		
+    		window.setScene(loginViewScene);
+    		window.show();
+		}
     }
     
+    /**
+     * When push the button, change to CreateView.
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void createButtonPushed(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
 		Parent createViewParent = loader.load();
@@ -85,24 +118,10 @@ public class UserOwnViewController implements Initializable{
         CreateViewController controller = loader.getController();
         controller.initData(username);
     }
-    
-	public void itemMouseClicked(MouseEvent event) throws IOException {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/RecipeView.fxml"));
-		Parent recipeViewParent = loader.load();
-		
-		Scene recipeViewScene = new Scene(recipeViewParent);
-		
-		// This line gets the Stage information.
-		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-		
-		window.setScene(recipeViewScene);
-		window.show();
-		
-		// Access the controller and call a method.
-        RecipeViewController controller = loader.getController();
-        controller.initData(recipeListView.getSelectionModel().getSelectedItem(), username);
-	}
 
+	/**
+	 * Initialize the view.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}

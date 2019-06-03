@@ -48,12 +48,13 @@ public class DBController {
 	    
 	    return ret;
 	}
+	
 	/**
-	 * Insert PreparationStep. Update the step = step+1 behind the inserted step
+	 * Update the step = step + 1 behind the inserted step.
 	 * 
-	 * @param ps PreparationStep PreaprationStep to be inserted.
 	 * @param recipe_id Foreign key for the PreparationStep.
 	 * @param step Order of the PreparationStep in the recipe.
+	 * @param detail Updated detail.
 	 * @return Updated rows.
 	 */
 	public static int updatePreparationStep(int recipe_id, int step, String detail) {
@@ -61,6 +62,7 @@ public class DBController {
 		PreparedStatement pstmt = null;
 		String sql = "update preparation_step set detail=? where recipe_id=? and step=?";
 		int ret = 0;
+		
 		try {
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setString(1, detail);
@@ -74,12 +76,13 @@ public class DBController {
 		}
 		return ret;
 	}
+
 	/**
-	 * Insert PreparationStep. Update the step = step+1 behind the inserted step
+	 * Insert PreparationStep. Update the step = step + 1 behind the inserted step.
 	 * 
-	 * @param ps PreparationStep PreaprationStep to be inserted.
 	 * @param recipe_id Foreign key for the PreparationStep.
 	 * @param step Order of the PreparationStep in the recipe.
+	 * @param ps PreaprationStep to be inserted.
 	 * @return Updated rows.
 	 */
 	public static int insertPreparationStep(int recipe_id, int step, PreparationStep ps) {
@@ -95,7 +98,7 @@ public class DBController {
 	    int ret = 0;
 	    
 	    try {
-	    	//get all the step larger than insert step and sort them
+	    	// Get all the step larger than insert step and sort them.
 	    	pstmt_search = conn.prepareStatement(search_sql);
 	    	pstmt_search.setInt(1, recipe_id);
 	    	pstmt_search.setInt(2, step);
@@ -105,15 +108,14 @@ public class DBController {
 	    	}
 	    	Collections.sort(list);
 	    	Collections.reverse(list);
-	    	//System.out.println(list);
+
 	    	Iterator<Integer> it = list.iterator();
 	    	while(it.hasNext()) {
 	    		PreparedStatement pstmt_update = null;
 	    		Integer target = it.next();
 	    		int target_step = target != null ? target : 0;
-	    		//System.out.println(target_step);
 	    	    pstmt_update = conn.prepareStatement(update_sql);
-	    	    pstmt_update.setInt(1, target_step+1);
+	    	    pstmt_update.setInt(1, target_step + 1);
 	    	    pstmt_update.setInt(2, recipe_id);
 		    	pstmt_update.setInt(3, target_step);
 		    	pstmt_update.executeUpdate();
@@ -128,17 +130,16 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-			DBUtils.close(pstmt_insert, conn);
-			DBUtils.close(pstmt_search, conn);
+			DBUtils.close(rs, pstmt_search, conn);
+			DBUtils.close(rs, pstmt_insert, conn);
 		}
 	    
 	    return ret;
 	}
 	
 	/**
-	 * Insert PreparationStep. Update the step = step+1 behind the inserted step
+	 * Delete the PreparationStep. Update the step = step - 1 behind the inserted step.
 	 * 
-	 * @param ps PreparationStep PreaprationStep to be inserted.
 	 * @param recipe_id Foreign key for the PreparationStep.
 	 * @param step Order of the PreparationStep in the recipe.
 	 * @return Updated rows.
@@ -152,17 +153,15 @@ public class DBController {
 	    String delete_sql = "delete from preparation_step where recipe_id=? and step=?";
 	    ResultSet rs = null;
 	    List<Integer> list = new ArrayList<>();
-	    
 	    int ret = 0;
 	    
 	    try {
-	    	
 	    	pstmt_delete = conn.prepareStatement(delete_sql);
 	        pstmt_delete.setInt(1, recipe_id);
 	        pstmt_delete.setInt(2, step);
 	        ret = pstmt_delete.executeUpdate();
 	        
-	      //get all the step smaller than insert step and sort them
+	        // Get all the steps smaller than insert step and sort them.
 	    	pstmt_search = conn.prepareStatement(search_sql);
 	    	pstmt_search.setInt(1, recipe_id);
 	    	pstmt_search.setInt(2, step);
@@ -171,22 +170,19 @@ public class DBController {
 	    		list.add(rs.getInt(1));
 	    	}
 	    	Collections.sort(list);
-	    	//System.out.println(list);
+
 	    	Iterator<Integer> it = list.iterator();
 	    	while(it.hasNext()) {
 	    		PreparedStatement pstmt_update = null;
 	    		Integer target = it.next();
 	    		int target_step = target != null ? target : 0;
-	    		//System.out.println(target_step);
 	    	    pstmt_update = conn.prepareStatement(update_sql);
-	    	    pstmt_update.setInt(1, target_step-1);
+	    	    pstmt_update.setInt(1, target_step - 1);
 	    	    pstmt_update.setInt(2, recipe_id);
 		    	pstmt_update.setInt(3, target_step);
 		    	pstmt_update.executeUpdate();
 		    	pstmt_update.close();
 	    	}
-	    	
-	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
@@ -211,7 +207,7 @@ public class DBController {
 	    int ret = 0;
 	    
 	    try {
-	    	pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+	    	pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 	    	pstmt.setString(1, recipe.getAuthor());
 	        pstmt.setString(2, recipe.getRecipeName());
 	        pstmt.setInt(3, recipe.getServeNum());
@@ -242,7 +238,7 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(rs, pstmt,conn);
+	    	DBUtils.close(rs, pstmt, conn);
 	    }
 	    
 	    return ret;
@@ -252,6 +248,7 @@ public class DBController {
 	 * Insert User.
 	 * Check the username with lower case.
 	 * 
+	 * @param user Inserted user.
 	 * @return Updated rows; -1 means the username cannot be inserted because it already exists.
 	 */
 	public static int insertUser(User user) {
@@ -270,6 +267,7 @@ public class DBController {
 	        if(rs.next()) {
 	        	return -1;
 	        }
+	        rs.close();
 	        
 	        insert_pstmt = conn.prepareStatement(insert_sql);
 	        insert_pstmt.setString(1, user.getUsername());
@@ -288,6 +286,7 @@ public class DBController {
 	/**
 	 * Login User.
 	 * 
+	 * @param user Login user.
 	 * @return Login success: username; login failure: null.
 	 */
 	public static String loginUser(User user) {

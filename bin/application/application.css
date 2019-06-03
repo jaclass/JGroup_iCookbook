@@ -1,15 +1,36 @@
+/* Set the whole background. */
+.root {
+	-fx-background: white;
+}
+
+/* Set the whole button. */
+.button {
+    -fx-background-color: #AFB42B;
+    -fx-background-radius: 2, 2;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 1 );
+    -fx-text-fill: black;
+}
+
+/* Set the listcell and listview. */
 .list-cell {
     -fx-background-color: transparent;
 }
 
+.list-cell:filled:selected .label {
+    -fx-text-fill: black;
+}
+
+.list-cell:empty {
+    -fx-opacity: 0;
+}
+
 .list-view {
     -fx-background-color: transparent;
+    -fx-selection-bar: green;
 }
 
-.list-view .scroll-bar:vertical {
-    -fx-scale-x: 0;
-}
-
+/* Set the scroll pane. */
 .scroll-pane {
     -fx-background-color: transparent;
 }
@@ -22,11 +43,88 @@
     -fx-background-insets: 0;
 }
 
-.scroll-pane .scroll-bar:vertical {
-    -fx-scale-x: 0;
-}
-
 .scroll-pane .scroll-bar:horizontal {
     -fx-scale-x: 0;
 }
 
+.corner {
+	-fx-background-color: transparent;
+}
+
+/* The customized recipe box. */
+#recipe-box {
+	-fx-border-width: 1;
+	-fx-border-color: #F0F4C3;
+	-fx-background-color: #F0F4C3;
+}
+
+/* The scroll bar. */
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-border-radius: 2em;
+}
+
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-padding: 0 0 10 0;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-padding: 0 10 0 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding: 0;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black,90%);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+	-fx-background-color: derive(gray,80%);
+	-fx-border-color: derive(gray,80%);
+	-fx-background-radius: 3em;
+	-fx-border-radius: 3em;
+}
+ 
+.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .decrement-button {
+    -fx-background-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-padding: 0 0 10 0;
+}
+ 
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+	-fx-background-radius: 0em;
+	-fx-padding: 0 10 0 0;
+}
+ 
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+	-fx-shape: " ";	
+	-fx-padding: 0;
+}
+ 
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black,90%);
+	-fx-background-insets: 2, 0, 0;
+	-fx-background-radius: 2em;
+}

@@ -13,12 +13,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import view.customized.AlertBox;
 
+/**
+ * Controller for RegisterView.
+ * 
+ * @author JGroup
+ *
+ */
 public class RegisterViewController implements Initializable {
 	
 	private String username;
@@ -40,48 +45,29 @@ public class RegisterViewController implements Initializable {
     	confirm = confirmField.getText();
     	
 		String regex = "^[0-9A-Za-z]{6,12}$";
-		Alert alert = new Alert(AlertType.INFORMATION);
 		
 		if(username.trim().equals("") || password.trim().equals("") || confirm.trim().equals("")) {
-			alert.setTitle("Register Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Username, password and confirm cannot be empty!");
-			alert.showAndWait();
+			AlertBox.display("Register Failure", "Username, password and confirm cannot be empty!");
 			return;
 		}
 		if(!username.matches(regex)) {
-			alert.setTitle("Register Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Username should consist of 6-12 characters or numbers");
-			alert.showAndWait();
+			AlertBox.display("Register Failure", "Username should consist of 6-12 characters or numbers!");
 			return;
 		}
 		if(!password.matches(regex)) {
-			alert.setTitle("Register Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Password should consist of 6-12 characters or numbers");
-			alert.showAndWait();
+			AlertBox.display("Register Failure", "Password should consist of 6-12 characters or numbers!");
 			return;
 		}
 		if(!password.equals(confirm)) {
-			alert.setTitle("Register Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Passwords don't match!");
-			alert.showAndWait();
+			AlertBox.display("Register Failure", "Passwords don't match!");
 			return;
 		}
 		if(DBController.insertUser(new User(username,password)) == -1) {
-			alert.setTitle("Register Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Username already exists, please change to another one!");
-			alert.showAndWait();
+			AlertBox.display("Register Failure", "Username already exists, please change to another one!");
 			return;
 		}
 		
-		alert.setTitle("Register Success");
-		alert.setHeaderText(null);
-		alert.setContentText("You have a new account, welcome to iCookBook!");
-		alert.showAndWait();
+		AlertBox.display("Register Success", "You have a new account, welcome to iCookBook!");
 
     	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/LoginView.fxml"));
 		Parent loginViewParent = loader.load();
@@ -95,6 +81,12 @@ public class RegisterViewController implements Initializable {
         window.show();
     }
     
+    /**
+     * When push the button, change to LoginView.
+     * 
+     * @param event
+     * @throws IOException
+     */
     public void loginButtonPushed(ActionEvent event) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/LoginView.fxml"));
 		Parent loginViewParent = loader.load();
@@ -108,6 +100,9 @@ public class RegisterViewController implements Initializable {
 		window.show();
     }
 	
+	/**
+	 * Initialize the view.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}

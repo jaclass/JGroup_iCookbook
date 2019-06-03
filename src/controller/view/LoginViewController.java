@@ -13,12 +13,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import view.customized.AlertBox;
 
+/**
+ * Controller for LoginView.
+ * 
+ * @author JGroup
+ *
+ */
 public class LoginViewController implements Initializable {
 	
 	private String username;
@@ -54,13 +59,8 @@ public class LoginViewController implements Initializable {
     	username = usernameField.getText();
     	password = passwordField.getText();
     	
-		Alert alert = new Alert(AlertType.INFORMATION);
-		
 		if(username.trim().equals("") || password.trim().equals("")) {
-			alert.setTitle("Login Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Username and password cannot be empty!");
-			alert.showAndWait();
+			AlertBox.display("Login Failure", "Username and password cannot be empty!");
 			return;
 		}
 		
@@ -85,14 +85,14 @@ public class LoginViewController implements Initializable {
 			return;
 		}else {
 			// Login failure
-			alert.setTitle("Login Failure");
-			alert.setHeaderText(null);
-			alert.setContentText("Wrong username or password, please try again!");
-			alert.showAndWait();
+			AlertBox.display("Login Failure", "Wrong username or password, please try again!");
 			return;
 		}
     }
 	
+	/**
+	 * Initialize the view.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 	}

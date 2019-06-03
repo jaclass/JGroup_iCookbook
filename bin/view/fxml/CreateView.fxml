@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -14,97 +15,102 @@
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0">
          <children>
-            <HBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" prefWidth="580.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#discardButtonPushed" prefWidth="100.0" text="Discard" />
-                  <Region prefHeight="25.0" prefWidth="360.0" />
-                  <Button mnemonicParsing="false" onAction="#saveButtonPushed" prefWidth="100.0" text="Save" />
+                  <Button mnemonicParsing="false" onAction="#finishButtonPushed" prefWidth="100.0" text="Finish Edit" />
+                  <Region prefHeight="25.0" prefWidth="380.0" />
+                  <Label fx:id="authorLabel" alignment="CENTER_RIGHT" onMouseClicked="#usernameMouseClicked" prefWidth="80.0" text="Label" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
                </children>
             </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="345.0" prefWidth="580.0">
-               <children>
-                  <Label fx:id="recipeNameLabel" alignment="CENTER" prefWidth="580.0" text="Label">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <HBox>
+            <ScrollPane prefHeight="355.0" prefWidth="580.0">
+               <content>
+                  <VBox prefWidth="580.0">
                      <children>
-                        <Label text="Author: ">
+                        <Label fx:id="recipeNameLabel" alignment="CENTER" prefWidth="580.0" text="Label">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label text="Author: ">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="authorLabel" text="Label">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Serve Number: ">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="serveNumLabel" text="Label">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Preparation Time: ">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="preparationTimeLabel" text="Label">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Cooking Time: ">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="cookingTimeLabel" text="Label">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Label prefWidth="580.0" text="Ingredients:">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="authorLabel" text="Label">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
+                        <VBox maxWidth="560.0" prefWidth="560.0" />
+      		                  <Label prefWidth="580.0" text="Preparation Steps:">
+      		                     <font>
+      		                        <Font name="System Bold" size="13.0" />
+      		                     </font>
+      		                  </Label>
+                        
+                              <VBox fx:id="stepBox" maxWidth="560.0" spacing="5.0" />
                      </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label text="Serve Number: ">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="serveNumLabel" text="Label">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label text="Preparation Time: ">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="preparationTimeLabel" text="Label">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label text="Cooking Time: ">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="cookingTimeLabel" text="Label">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <Label prefWidth="580.0" text="Ingredients:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <ListView fx:id="ingredientView" prefHeight="195.0" prefWidth="580.0" />
-                  
-                  <VBox fx:id="stepBox" prefHeight="195.0" prefWidth="580.0" >
-	                  <children>
-		                  <Label prefWidth="580.0" text="Preparation Steps:">
-		                     <font>
-		                        <Font name="System Bold" size="13.0" />
-		                     </font>
-		                  </Label>
-		              </children>
                   </VBox>
-               </children>
-            </VBox>
+               </content>
+            </ScrollPane>
          </children>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
    </children>

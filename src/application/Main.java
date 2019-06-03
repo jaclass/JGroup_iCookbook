@@ -21,11 +21,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/LoginView.fxml"));
 			Parent root = loader.load();
 	        
 	        Scene scene = new Scene(root);
-	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 	        primaryStage.setScene(scene);
 	        
 			primaryStage.setTitle("iCookbook --- JGroup");
@@ -38,7 +37,7 @@ public class Main extends Application {
 	}
 	
 	/**
-	 * Main function.
+	 * Main function to launch the first stage.
 	 * 
 	 * @param args Command line arguments.
 	 */
