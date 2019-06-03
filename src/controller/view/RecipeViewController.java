@@ -46,7 +46,7 @@ public class RecipeViewController implements Initializable {
      * @param recipe Selected recipe.
      */
     public void initData(Recipe recipe, String username) {
-    	selectedRecipe = recipe;
+    	this.selectedRecipe = recipe;
     	this.username = username;
     	
     	usernameLabel.setText(username);

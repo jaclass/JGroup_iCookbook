@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import controller.db.DBController;
 import entity.PreparationStep;
+import entity.Recipe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,9 +28,15 @@ import view.customized.PreparationStepBox;
  *
  */
 public class CreateViewController implements Initializable{
-	
+	private Recipe selectedRecipe;
 	private String username;
 	
+	/* @FXML private Label usernameLabel; */
+	@FXML private Label authorLabel;
+	@FXML private Label recipeNameLabel;
+	@FXML private Label serveNumLabel;
+	@FXML private Label preparationTimeLabel;
+	@FXML private Label cookingTimeLabel;
 	@FXML private VBox stepBox;
 	
 	/**
@@ -36,8 +44,17 @@ public class CreateViewController implements Initializable{
 	 * 
 	 * @param username Username.
 	 */
-	public void initData(String username) {
+	public void initData(Recipe item,String username) {
 		this.username = username;
+		this.selectedRecipe = item;
+    	
+		/* usernameLabel.setText(username); */
+    	authorLabel.setText(selectedRecipe.getAuthor());
+    	recipeNameLabel.setText(selectedRecipe.getRecipeName());
+    	serveNumLabel.setText(String.valueOf(selectedRecipe.getServeNum()));
+    	preparationTimeLabel.setText(String.valueOf(selectedRecipe.getPreparationTime())+" minutes");
+    	cookingTimeLabel.setText(String.valueOf(selectedRecipe.getCookingTime())+" minutes");
+    	(new PreparationStepBox(item.getPreparationSteps(),stepBox,item.getRecipeId())).generate();
 	}
 	
 	/**
@@ -93,8 +110,6 @@ public class CreateViewController implements Initializable{
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		List<PreparationStep> preps = DBController.getPreparationStepsOfRecipe(1);
-		(new PreparationStepBox(preps, this.stepBox, 1)).generate();
 	}
 
 }

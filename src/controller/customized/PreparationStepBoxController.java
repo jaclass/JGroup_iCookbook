@@ -202,6 +202,42 @@ public class PreparationStepBoxController {
 	 */
 	public static void generate(VBox container, List<PreparationStep> preps, int id) {
 		container.getChildren().clear();
+		if(preps.size()==0) {	// create a new recipe
+			Button add_btn = new Button("add one");
+			container.getChildren().add(add_btn);
+			//add listener to add_btn
+			add_btn.setOnAction((e)->{
+				System.out.println("2");
+				Stage stage = new Stage();
+				stage.initModality(Modality.APPLICATION_MODAL);
+				stage.setWidth(400);
+				stage.setHeight(100);
+				stage.setTitle("Insert");
+				
+				StackPane sPane = new StackPane();
+				Scene scene = new Scene(sPane);
+				FlowPane fpane = new FlowPane();
+				fpane.setAlignment(Pos.CENTER);
+				TextField input = new TextField();
+				
+				Button btn = new Button("Insert");
+				fpane.getChildren().addAll(input, btn);
+				sPane.getChildren().add(fpane);
+				btn.setOnAction((event)->{
+					String str = input.getText();
+					// Insert into database.
+
+					DBController.insertPreparationStep(id, 1, new PreparationStep(str));
+					generate(container, DBController.getPreparationStepsOfRecipe(id), id);
+					container.getChildren().remove(add_btn);
+					stage.close();
+				});
+				stage.setScene(scene);
+				stage.show();
+				
+			});
+			return ;
+		}
 		Iterator<PreparationStep> it = preps.iterator();
 		while(it.hasNext()) {
 			PreparationStep prep = it.next();

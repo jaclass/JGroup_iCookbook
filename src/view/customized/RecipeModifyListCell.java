@@ -116,7 +116,7 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
                 
         		// Access the controller and call a method.
                 CreateViewController controller = loader.getController();
-                controller.initData(username);
+                controller.initData(item,username);
         	});
         	deleteButton.setOnAction(e -> {
             	Boolean answer = ConfirmBox.display("Delete Recipe", "Are you sure to delete the recipe?");

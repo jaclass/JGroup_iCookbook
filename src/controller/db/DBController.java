@@ -197,7 +197,7 @@ public class DBController {
 	 * Insert Recipe.
 	 * 
 	 * @param recipe Recipe Entity to be inserted.
-	 * @return Updated rows.
+	 * @return Primary Key of the inserted recipe.
 	 */
 	public static int insertRecipe(Recipe recipe) {
 		Connection conn = DBUtils.getMySqlConn();
@@ -218,7 +218,8 @@ public class DBController {
 	        // Get the primary key of the recipe.
 	        rs = pstmt.getGeneratedKeys();
 	        if (rs.next()) {
-	            recipe.setRecipeId(rs.getInt(1));
+	        	ret = rs.getInt(1);
+	            recipe.setRecipeId(ret);
 	        } 
 
 	        // Insert ingredients.
@@ -403,7 +404,30 @@ public class DBController {
 	    
 	    return result;
 	}
-	
+	public static Recipe getRecipeById(int id) {
+		Connection conn = DBUtils.getMySqlConn();
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String sql = "select * from recipe where recipe_id=?";
+	    Recipe result = null;
+	    
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, id);
+	        rs = pstmt.executeQuery();
+	        while(rs.next()) {
+	        	result = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	result.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
+	        	result.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+			DBUtils.close(rs, pstmt, conn);
+		}
+	    
+	    return result;
+	}
 	/**
 	 * Get recipes by username.
 	 * 
@@ -585,5 +609,7 @@ public class DBController {
         	System.out.println(recipe);
         }
 	}
+
+	
 	
 }

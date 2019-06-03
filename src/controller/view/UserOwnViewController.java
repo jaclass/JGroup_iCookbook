@@ -107,6 +107,13 @@ public class UserOwnViewController implements Initializable{
 		Parent createViewParent = loader.load();
 		
         Scene createViewScene = new Scene(createViewParent);
+        //insert an new empty recipe into datebase
+        Recipe insertedRecipe = new Recipe();
+        insertedRecipe.setRecipeName("Recipe Name");
+        insertedRecipe.setAuthor(this.username);
+        int inserted_id = DBController.insertRecipe(insertedRecipe);
+        System.out.println(inserted_id);
+       
         
         // This line gets the Stage information.
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -116,7 +123,9 @@ public class UserOwnViewController implements Initializable{
         
 		// Access the controller and call a method.
         CreateViewController controller = loader.getController();
-        controller.initData(username);
+        
+        controller.initData(DBController.getRecipeById(inserted_id),username);
+        
     }
 
 	/**
