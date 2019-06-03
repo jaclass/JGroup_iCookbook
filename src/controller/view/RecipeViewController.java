@@ -53,8 +53,8 @@ public class RecipeViewController implements Initializable {
     	authorLabel.setText(selectedRecipe.getAuthor());
     	recipeNameLabel.setText(selectedRecipe.getRecipeName());
     	serveNumLabel.setText(String.valueOf(selectedRecipe.getServeNum()));
-    	preparationTimeLabel.setText(String.valueOf(selectedRecipe.getPreparationTime()));
-    	cookingTimeLabel.setText(String.valueOf(selectedRecipe.getCookingTime()));
+    	preparationTimeLabel.setText(String.valueOf(selectedRecipe.getPreparationTime())+" minutes");
+    	cookingTimeLabel.setText(String.valueOf(selectedRecipe.getCookingTime())+" minutes");
     	
     	(new IngredientViewBox(recipe.getIngredients(), this.ingredientBox)).generate();
     	(new PreparationStepViewBox(recipe.getPreparationSteps(), this.stepBox)).generate();

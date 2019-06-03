@@ -54,7 +54,7 @@ public class PreparationStepBoxController {
 		sPane.getChildren().add(fpane);
 		btn.setOnAction((e)->{
 			String str = input.getText();
-			label.setText("· "+str);
+			label.setText(prep.getStep()+". "+str);
 			// Update database.
 			if(DBController.updatePreparationStep(id, prep.getStep(), str)!=-1) {
 				prep.setDetail(str);
@@ -157,7 +157,7 @@ public class PreparationStepBoxController {
 		VBox oneBox = new VBox();
 		oneBox.setMaxWidth(580);
 		
-		Label label = new Label("· "+prep.getDetail());
+		Label label = new Label(prep.getStep()+". "+prep.getDetail());
 		label.setWrapText(true);
 		label.setMaxWidth(560);
 		

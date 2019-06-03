@@ -16,7 +16,7 @@
          <children>
             <HBox alignment="CENTER" prefWidth="580.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#finishButtonPushed" prefWidth="100.0" text="Finish Edit" />
+                  <Button mnemonicParsing="false" onAction="#finishButtonPushed" prefWidth="100.0" text="Finish" />
                   <Region prefHeight="25.0" prefWidth="470.0" />
                </children>
             </HBox>
