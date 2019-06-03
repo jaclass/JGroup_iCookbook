@@ -15,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.customized.PreparationStepBox;
@@ -42,6 +43,29 @@ public class CreateViewController implements Initializable{
 		authorLabel.setText(username);
 	}
 	
+	/**
+	 * When the button clicked, go to UserOwnView.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void usernameMouseClicked(MouseEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/UserOwnView.fxml"));
+		Parent userOwnViewParent = loader.load();
+		
+		Scene userOwnViewScene = new Scene(userOwnViewParent);
+		
+		// This line gets the Stage information.
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		
+		window.setScene(userOwnViewScene);
+		window.show();
+		
+		// Access the controller and call a method.
+        UserOwnViewController controller = loader.getController();
+        controller.initData(username);
+	}
+	
     /**
      * When the button pushed, then back to UserOwnView.
      * 
@@ -64,6 +88,8 @@ public class CreateViewController implements Initializable{
         UserOwnViewController controller = loader.getController();
         controller.initData(username);
     }
+    
+    
 
 	/**
 	 * Initialize the view.
