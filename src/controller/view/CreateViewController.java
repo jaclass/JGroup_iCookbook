@@ -14,7 +14,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,7 +30,6 @@ public class CreateViewController implements Initializable{
 	private String username;
 	
 	@FXML private VBox stepBox;
-	@FXML private Label authorLabel;
 	
 	/**
 	 * Initiate the view.
@@ -40,7 +38,6 @@ public class CreateViewController implements Initializable{
 	 */
 	public void initData(String username) {
 		this.username = username;
-		authorLabel.setText(username);
 	}
 	
 	/**
