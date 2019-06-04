@@ -18,6 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.customized.IngredientViewBox;
 import view.customized.PreparationStepViewBox;
+import view.pop.AlertBox;
+import view.pop.SetBox;
 
 /**
  * Controller for RecipeView.
@@ -104,6 +106,21 @@ public class RecipeViewController implements Initializable {
 		// Access the controller and call a method.
         UserOwnViewController controller = loader.getController();
         controller.initData(username);
+	}
+	
+	/**
+	 * When the button pushed
+	 * 
+	 * @param event
+	 */
+	public void changeButtonPushed(ActionEvent event) {
+		String num = SetBox.display("Change Serve Number:", "Please input the new value:");
+		if(!num.matches("^[1-9]\\d*$")) {
+			AlertBox.display("Invalid", "You can just input the positive integer!");
+		}else {
+			selectedRecipe.setServeNum(Integer.parseInt(num));
+			initData(selectedRecipe, username);
+		}
 	}
     
 	/**

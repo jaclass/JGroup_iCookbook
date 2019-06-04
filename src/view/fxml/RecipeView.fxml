@@ -35,7 +35,7 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Author: ">
                                  <font>
@@ -49,21 +49,24 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT">
                            <children>
                               <Label text="Serve Number: ">
                                  <font>
                                     <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="serveNumLabel" text="Label">
+                              <Label fx:id="serveNumLabel" prefWidth="40.0" text="Label">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
+                              <Region prefWidth="100.0" />
+                              <Label text="You can click here to change the serve number. -&gt; " />
+                              <Button mnemonicParsing="false" onAction="#changeButtonPushed" prefWidth="60.0" text="Change" />
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Preparation Time: ">
                                  <font>
@@ -77,7 +80,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Cooking Time: ">
                                  <font>
@@ -91,13 +94,13 @@
                               </Label>
                            </children>
                         </HBox>
-                        <Label prefWidth="580.0" text="Ingredients:">
+                        <Label prefHeight="25.0" prefWidth="580.0" text="Ingredients:">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
                         <VBox fx:id="ingredientBox" maxWidth="560.0" prefWidth="560.0" />
-                        <Label prefWidth="580.0" text="Preparation Steps:">
+                        <Label prefHeight="25.0" prefWidth="580.0" text="Preparation Steps:">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>

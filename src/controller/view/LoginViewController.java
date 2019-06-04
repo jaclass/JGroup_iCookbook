@@ -16,7 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import view.customized.AlertBox;
+import view.pop.AlertBox;
 
 /**
  * Controller for LoginView.
