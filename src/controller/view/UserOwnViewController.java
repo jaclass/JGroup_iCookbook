@@ -12,10 +12,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import view.customized.ConfirmBox;
 import view.customized.RecipeModifyListCell;
@@ -103,28 +108,61 @@ public class UserOwnViewController implements Initializable{
      * @throws IOException
      */
     public void createButtonPushed(ActionEvent event) throws IOException {
-    	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
-		Parent createViewParent = loader.load();
+    	Stage stage = new Stage();
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setWidth(400);
+		stage.setHeight(100);
+		stage.setTitle("Recipe Name");
 		
-        Scene createViewScene = new Scene(createViewParent);
-        //insert an new empty recipe into datebase
-        Recipe insertedRecipe = new Recipe();
-        insertedRecipe.setRecipeName("Recipe Name");
-        insertedRecipe.setAuthor(this.username);
-        int inserted_id = DBController.insertRecipe(insertedRecipe);
-        System.out.println(inserted_id);
-       
-        
-        // This line gets the Stage information.
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
-        window.setScene(createViewScene);
-        window.show();
-        
-		// Access the controller and call a method.
-        CreateViewController controller = loader.getController();
-        
-        controller.initData(DBController.getRecipeById(inserted_id),username);
+		StackPane sPane = new StackPane();
+		Scene scene = new Scene(sPane);
+		FlowPane fpane = new FlowPane();
+		fpane.setAlignment(Pos.CENTER);
+		TextField input = new TextField();
+		
+		Button btn = new Button("create");
+		fpane.getChildren().addAll(input, btn);
+		sPane.getChildren().add(fpane);
+		
+		btn.setOnAction((e)->{
+			String str = input.getText();
+			if(str.equals(null)) {
+				return ;
+			}
+	    	FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
+			Parent createViewParent;
+			try {
+				createViewParent = loader.load();
+				Scene createViewScene = new Scene(createViewParent);
+		        //insert an new empty recipe into db
+		        Recipe insertedRecipe = new Recipe();
+		        insertedRecipe.setRecipeName(str);
+		        insertedRecipe.setAuthor(this.username);
+		        int inserted_id = DBController.insertRecipe(insertedRecipe);
+		        System.out.println(inserted_id);
+		       
+		        
+		        // This line gets the Stage information.
+		        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		        
+		        window.setScene(createViewScene);
+		        window.show();
+		        
+				// Access the controller and call a method.
+		        CreateViewController controller = loader.getController();
+		        controller.initData(DBController.getRecipeById(inserted_id),username);
+		        
+		        stage.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+	        
+		});
+		
+		stage.setScene(scene);
+		stage.show();
         
     }
 
