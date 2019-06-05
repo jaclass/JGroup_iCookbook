@@ -9,6 +9,7 @@ import entity.PreparationStep;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.pop.AlertBox;
@@ -58,21 +59,10 @@ public class PreparationStepBox {
 	public void generate() {
 		this.container.getChildren().clear();
 		if(preps.size()==0) {	// create a new recipe
-			Button add_btn = new Button("add one");
+			Button add_btn = new Button("add your first preparation step!");
 			this.container.getChildren().add(add_btn);
 			//add listener to add_btn
 			add_btn.setOnAction((e)->{
-				/*
-				 * SetBox popBox = new SetBox("Add", "Add your first step!"); String get =
-				 * popBox.display(); if(get == null) { // X button return ; } else
-				 * if(get.trim().length() == 0) { // empty string AlertBox.display("No Detail",
-				 * "You must have the detail for each step!"); } else { // valid input // Update
-				 * database. if(DBController.insertPreparationStep(this.recipe_id, 1, new
-				 * PreparationStep(get))!=-1) {
-				 * this.preps=DBController.getPreparationStepsOfRecipe(this.recipe_id);
-				 * this.generate(); container.getChildren().remove(add_btn); }else {
-				 * AlertBox.display("DB error", "Something runs wrong with datebase!"); } }
-				 */	
 				PreparationStepBoxController.addFirst(this.container, this.recipe_id, add_btn);
 			});
 			return ;
@@ -94,7 +84,7 @@ public class PreparationStepBox {
 	 * @return Generated box.
 	 */
 	public VBox generateOne(PreparationStep prep, VBox mainBox, int id) {
-		VBox oneBox = new VBox();
+		VBox oneBox = new VBox(5);
 		oneBox.setMaxWidth(580);
 		
 		Label label = new Label(prep.getStep()+". "+prep.getDetail());
@@ -129,7 +119,7 @@ public class PreparationStepBox {
 			PreparationStepBoxController.insert(prep, mainBox, oneBox, false, id);
 		});
 		
-		oneBox.getChildren().addAll(label, buttonBox);
+		oneBox.getChildren().addAll(label, buttonBox, new Separator());
 		return oneBox;
 	}
 	

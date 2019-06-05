@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import controller.customized.IngredientBoxController;
 import controller.db.DBController;
 import entity.PreparationStep;
 import entity.Recipe;
@@ -19,7 +20,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import view.customized.IngredientBox;
 import view.customized.PreparationStepBox;
+import view.pop.AlertBox;
+import view.pop.SetBox;
 
 /**
  * Controller for CreateView.
@@ -38,6 +42,7 @@ public class CreateViewController implements Initializable{
 	@FXML private Label preparationTimeLabel;
 	@FXML private Label cookingTimeLabel;
 	@FXML private VBox stepBox;
+	@FXML private VBox ingredientBox;
 	
 	/**
 	 * Initiate the view.
@@ -52,9 +57,10 @@ public class CreateViewController implements Initializable{
     	authorLabel.setText(selectedRecipe.getAuthor());
     	recipeNameLabel.setText(selectedRecipe.getRecipeName());
     	serveNumLabel.setText(String.valueOf(selectedRecipe.getServeNum()));
-    	preparationTimeLabel.setText(String.valueOf(selectedRecipe.getPreparationTime())+" minutes");
-    	cookingTimeLabel.setText(String.valueOf(selectedRecipe.getCookingTime())+" minutes");
+    	preparationTimeLabel.setText(String.valueOf(selectedRecipe.getPreparationTime())+"");
+    	cookingTimeLabel.setText(String.valueOf(selectedRecipe.getCookingTime())+"");
     	(new PreparationStepBox(item.getPreparationSteps(),stepBox,item.getRecipeId())).generate();
+    	(new IngredientBox(item.getIngredients(),ingredientBox,item.getRecipeId())).generate();
 	}
 	
 	/**
@@ -78,6 +84,95 @@ public class CreateViewController implements Initializable{
 		// Access the controller and call a method.
         UserOwnViewController controller = loader.getController();
         controller.initData(username);
+	}
+	
+	/**
+	 * When the button clicked, update serNum.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void updateSerNum(ActionEvent event) throws IOException {
+		System.out.println(1);
+		String result = (new SetBox("edit","Edit your serve number",this.serveNumLabel.getText())).display();
+		if(result==null) {
+			return ;
+		}
+		if(result.trim().length()==0) {
+			AlertBox.display("Edit Failure", "The serve number cannot be empty!");
+			return ;
+		}
+		int ret;
+		try {
+			 ret = Integer.parseInt(result.trim());
+		}catch(NumberFormatException exception) {
+			AlertBox.display("Number Error", "The value of serve number must be a number!");
+			return ;
+		}
+		DBController.updateServeNum(selectedRecipe.getRecipeId(), ret);
+		this.serveNumLabel.setText(result);
+	}
+	
+	/**
+	 * When the button clicked, update PreparationTime.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void updatePreparationTime(ActionEvent event) throws IOException {
+		String result = (new SetBox("edit","Edit your preparation time",this.preparationTimeLabel.getText())).display();
+		if(result==null) {
+			return ;
+		}
+		if(result.trim().length()==0) {
+			AlertBox.display("Edit Failure", "The preparation time cannot be empty!");
+			return ;
+		}
+		int ret;
+		try {
+			 ret = Integer.parseInt(result.trim());
+		}catch(NumberFormatException exception) {
+			AlertBox.display("Number Error", "The value of preparation time must be a number!");
+			return ;
+		}
+		DBController.updatePrepTime(selectedRecipe.getRecipeId(), ret);
+		this.preparationTimeLabel.setText(result);
+	}
+	
+	/**
+	 * When the button clicked, update cooking time.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void updateCookingTime(ActionEvent event) throws IOException {
+		String result = (new SetBox("edit","Edit your cooking time",this.cookingTimeLabel.getText())).display();
+		if(result==null) {
+			return ;
+		}
+		if(result.trim().length()==0) {
+			AlertBox.display("Edit Failure", "The preparation time cannot be empty!");
+			return ;
+		}
+		int ret;
+		try {
+			 ret = Integer.parseInt(result.trim());
+		}catch(NumberFormatException exception) {
+			AlertBox.display("Number Error", "The value of preparation time must be a number!");
+			return ;
+		}
+		DBController.updateCookTime(selectedRecipe.getRecipeId(), ret);
+		this.cookingTimeLabel.setText(result);
+	}
+	
+	/**
+	 * When the button clicked, add new ingredient.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void addIngredientClicked(ActionEvent event) throws IOException {
+		IngredientBoxController.add(selectedRecipe.getRecipeId(), selectedRecipe.getIngredients(), ingredientBox);
 	}
 	
     /**

@@ -74,7 +74,7 @@ public class PreparationStepBoxController {
 			return;
 		}
 		Boolean option = ConfirmBox.display("Delete",
-				"Are you sure to delete this step? This operation cannot be retrieved!");
+				"Are you sure to delete this step?");
 
 		if (option) {
 			// Delete from database.

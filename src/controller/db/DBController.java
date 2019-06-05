@@ -48,6 +48,61 @@ public class DBController {
 	    
 	    return ret;
 	}
+	/**
+	 * Update the ingredient
+	 * 
+	 * @param recipe_id Foreign key for the PreparationStep.
+	 * @param step Order of the PreparationStep in the recipe.
+	 * @param detail Updated detail.
+	 * @return Updated rows.
+	 */
+	public static int updateIngredient(int recipe_id, String origin_name, Ingredient ing) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		String sql = "update Ingredient set ingredient_name=?,amount=?,unit=?,description=? where recipe_id=? and ingredient_name=?";
+		int ret = 0;
+		
+		try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, ing.getIngredientName());
+	        pstmt.setDouble(2, ing.getAmount());
+	        pstmt.setString(3, ing.getUnit());
+	        pstmt.setString(4, ing.getDescription());
+	        pstmt.setInt(5, recipe_id);
+	        pstmt.setString(6, origin_name);
+	        ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+			DBUtils.close(pstmt, conn);
+		}
+		return ret;
+	}
+	/**
+	 * Delete Ingredient.
+	 * 
+	 * @param ing Ingredient Entity to be deleted.
+	 * @param recipe_id Foreign key for the PreparationStep.
+	 * @return Updated rows.
+	 */
+	public static int deleteIngredient(int recipe_id, Ingredient ing) {
+		Connection conn = DBUtils.getMySqlConn();
+	    PreparedStatement pstmt = null;
+	    String sql = "delete from ingredient where recipe_id=? and ingredient_name=?";
+	    int ret = 0;
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, recipe_id);
+	        pstmt.setString(2, ing.getIngredientName());
+	        ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+			DBUtils.close(pstmt, conn);
+		}
+	    
+	    return ret;
+	}
 	
 	/**
 	 * Update the step = step + 1 behind the inserted step.
@@ -242,6 +297,81 @@ public class DBController {
 	    	DBUtils.close(rs, pstmt, conn);
 	    }
 	    
+	    return ret;
+	}
+	
+	/**
+	 * update Recipe.
+	 * 
+	 * @param recipe_id id of Recipe Entity to be updated.
+	 * @return num the updated number.
+	 */
+	public static int updateServeNum(int recipe_id, int num ) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "update recipe set serve_num=? where recipe_id=?";
+	    int ret = 0;
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setInt(1, num);
+	    	pstmt.setInt(2, recipe_id);
+	    	ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBUtils.close(rs, pstmt, conn);
+	    }
+	    return ret;
+	}
+	
+	/**
+	 * update Recipe.
+	 * 
+	 * @param recipe_id id of Recipe Entity to be updated.
+	 * @return time the updated preparation time.
+	 */
+	public static int updatePrepTime(int recipe_id, int time ) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "update recipe set preparation_time=? where recipe_id = ?";
+	    int ret = 0;
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setInt(1, time);
+	    	pstmt.setInt(2, recipe_id);
+	    	ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBUtils.close(rs, pstmt, conn);
+	    }
+	    return ret;
+	}
+	
+	/**
+	 * update Recipe.
+	 * 
+	 * @param recipe_id id of Recipe Entity to be updated.
+	 * @return time the updated cooking time.
+	 */
+	public static int updateCookTime(int recipe_id, int time ) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "update recipe set cooking_time=? where recipe_id = ?";
+	    int ret = 0;
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setInt(1, time);
+	    	pstmt.setInt(2, recipe_id);
+	    	ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBUtils.close(rs, pstmt, conn);
+	    }
 	    return ret;
 	}
 	
