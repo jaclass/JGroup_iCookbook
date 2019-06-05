@@ -110,11 +110,14 @@ public class UserOwnViewController implements Initializable{
      * @throws IOException
      */
     public void createButtonPushed(ActionEvent event) throws IOException {
-    	String get = SetBox.display("Recipe Name", "Please input the recipe name:");
-		System.out.println(get);
-		if(get.length() == 0) {
+    	SetBox popBox = new SetBox("Recipe Name", "Please input the recipe name:");
+		String get = popBox.display();
+		if(get==null) { // X button
+			return ;
+		}
+		else if(get.trim().length() == 0) { // null String
 			AlertBox.display("No Recipe Name", "You must put the recipe name!");
-		}else {
+		}else { // valid input
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
 			Parent createViewParent;
 			try {
@@ -125,7 +128,7 @@ public class UserOwnViewController implements Initializable{
 				insertedRecipe.setRecipeName(get);
 				insertedRecipe.setAuthor(this.username);
 				int inserted_id = DBController.insertRecipe(insertedRecipe);
-				System.out.println(inserted_id);
+				//System.out.println(inserted_id);
 				
 				// This line gets the Stage information.
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

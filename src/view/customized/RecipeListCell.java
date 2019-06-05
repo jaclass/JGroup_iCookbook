@@ -54,7 +54,7 @@ public class RecipeListCell extends ListCell<Recipe>{
         	ImageView photo = new ImageView();
         	photo.setImage(new Image("/image/demo.jpg"));
         	photo.setFitHeight(110);
-        	photo.setFitWidth(150);
+        	photo.setFitWidth(120);
         	
         	Label recipeNameLabel = new Label();
         	Label authorTitle = new Label(); 
@@ -111,7 +111,7 @@ public class RecipeListCell extends ListCell<Recipe>{
         	});
         	
         	HBox buttonBox = new HBox(10);
-        	buttonBox.setPrefWidth(370);
+        	buttonBox.setPrefWidth(400);
         	buttonBox.setPadding(new Insets(10, 0, 0, 0));
         	buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         	buttonBox.getChildren().addAll(viewButton);

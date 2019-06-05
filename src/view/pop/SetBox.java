@@ -18,34 +18,48 @@ import javafx.stage.Stage;
  */
 public class SetBox {
 	
-	static String info;
+	private String info;
+	private String title;
+	private String message;
+	private String result;
+
+	public SetBox( String title,String info) {
+		this.info = info;
+		this.title = title;
+		this.result=null;
+	}
+	
+	public SetBox(String title, String info,  String message) {
+		this.info = info;
+		this.title = title;
+		this.message = message;
+		this.result=null;
+	}
 	
 	/**
 	 * Display one box.
 	 * 
-	 * @param title Title.
-	 * @param message Message to show.
+	 * @return the set message.
 	 */
-	public static String display(String title, String message) {
+	public String display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle(title);
+		window.setTitle(this.title);
 		window.setWidth(400);
 		window.setHeight(130);
 		window.setResizable(false);
 		window.getIcons().add(new Image("/image/app_icon.png"));
 		
 		Label label = new Label();
-		label.setText(message);
+		label.setText(this.info);
 		
-		TextField get = new TextField();
+		TextField get = new TextField(this.message);
 		get.setMaxWidth(300);
 		
 		Button okButton = new Button("OK");
 		okButton.setPrefWidth(50);
-		
 		okButton.setOnAction(e -> {
-			setInfo(get.getText());
+			this.result= get.getText()==null?"":get.getText();
 			window.close();
 		});
 		
@@ -57,17 +71,42 @@ public class SetBox {
 		scene.getStylesheets().add("/application/application.css");
 		window.setScene(scene);
 		window.showAndWait();
-		
-		return info;
+		return this.result;
 	}
 	
-	/**
-	 * Set the static parameter.
-	 * 
-	 * @param text Text to set.
-	 */
-	private static void setInfo(String text) {
-		info = text;
-	}
+	
+	//getter&setter
+		public String getInfo() {
+			return info;
+		}
+
+		public void setInfo(String info) {
+			this.info = info;
+		}
+
+		public String getTitle() {
+			return title;
+		}
+
+		public void setTitle(String title) {
+			this.title = title;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+		public String getResult() {
+			return result;
+		}
+
+		public void setResult(String result) {
+			this.result = result;
+		}
+	
 
 }

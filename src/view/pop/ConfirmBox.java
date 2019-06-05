@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class ConfirmBox {
 	
-	static boolean answer;
+	static boolean answer=false;
 	
 	/**
 	 * Display the confrim box.
@@ -38,7 +38,7 @@ public class ConfirmBox {
 		
 		Label label = new Label();
 		label.setText(message);
-		
+		boolean ret;
 		Button yesButton = new Button("Yes");
 		Button noButton = new Button("No");
 		yesButton.setPrefWidth(50);
@@ -52,6 +52,9 @@ public class ConfirmBox {
 			answer = false;
 			window.close();
 		});
+		
+		ret = answer;
+		answer = false;
 		
 		HBox buttonBox = new HBox(20);
 		buttonBox.setAlignment(Pos.CENTER);
