@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -12,9 +19,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../application/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.RecipeViewController">
+<AnchorPane prefHeight="480.0" prefWidth="660.0" stylesheets="@../../application/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.RecipeViewController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0">
+      <VBox prefHeight="480.0" prefWidth="660.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
@@ -30,11 +37,11 @@
                   </Label>
                </children>
             </HBox>
-            <ScrollPane prefHeight="345.0" prefWidth="580.0">
+            <ScrollPane prefHeight="460.0" prefWidth="660.0">
                <content>
-                  <VBox prefWidth="580.0" spacing="5.0">
+                  <VBox prefWidth="640.0" spacing="5.0">
                      <children>
-                        <Label fx:id="recipeNameLabel" alignment="CENTER" prefWidth="580.0" text="Label">
+                        <Label fx:id="recipeNameLabel" alignment="CENTER" prefWidth="660.0" text="Label">
                            <font>
                               <Font name="System Bold" size="25.0" />
                            </font>
@@ -70,12 +77,6 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Region prefWidth="33.0" />
-                              <Label text="You can click here to change the serve number. -&gt; ">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font></Label>
-                              <Button id="secondary-button" mnemonicParsing="false" onAction="#changeButtonPushed" prefWidth="100.0" text="Change" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="25.0">
@@ -106,18 +107,23 @@
                               </Label>
                            </children>
                         </HBox>
-                        <Label prefHeight="25.0" prefWidth="580.0" text="Ingredients:">
+                        <HBox prefHeight="25.0">
+                           <children>
+                              <Label prefHeight="25.0" text="Ingredients:">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#changeButtonPushed" prefWidth="140.0" text="Your serve number？" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="ingredientBox" maxWidth="660.0" prefWidth="660.0" />
+                        <Label prefHeight="25.0" prefWidth="660.0" text="Preparation Steps:">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <VBox fx:id="ingredientBox" maxWidth="560.0" prefWidth="560.0" />
-                        <Label prefHeight="25.0" prefWidth="580.0" text="Preparation Steps:">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Label>
-                        <VBox fx:id="stepBox" maxWidth="560.0" prefWidth="560.0" />
+                        <VBox fx:id="stepBox" maxWidth="660.0" prefWidth="660.0" />
                      </children>
                   </VBox>
                </content>

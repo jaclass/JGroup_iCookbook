@@ -99,7 +99,7 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
         	deleteButton.setPrefWidth(60);
         	
         	HBox buttonBox = new HBox(10);
-        	buttonBox.setPrefWidth(400);
+        	buttonBox.setPrefWidth(460);
         	buttonBox.setPadding(new Insets(10, 0, 0, 0));
         	buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         	buttonBox.getChildren().addAll(editButton, deleteButton);

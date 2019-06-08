@@ -93,7 +93,7 @@ public class SetIngBox {
 		vbox4.setAlignment(Pos.CENTER);
 		
 		inputBox.setAlignment(Pos.CENTER);
-		inputBox.getChildren().addAll(vbox1, vbox2, vbox3, vbox4);
+		inputBox.getChildren().addAll(vbox2, vbox3, vbox1, vbox4);
 
 		Button okButton = new Button("OK");
 		okButton.setPrefWidth(50);
@@ -101,6 +101,7 @@ public class SetIngBox {
 			double amount;
 			try {
 				 amount = Double.parseDouble(getAmount.getText().trim());
+				 //System.out.println(amount);
 			}catch(NumberFormatException exception) {
 				window.close();
 				AlertBox.display("Number Error", "You can just input the positive integer!");
@@ -110,6 +111,7 @@ public class SetIngBox {
 										amount, 
 										getUnit.getText() == null ? "" : getUnit.getText(), 
 										getDes.getText() == null ? "" : getDes.getText());
+			//System.out.println(this.result.getAmount());
 			window.close();
 		});
 

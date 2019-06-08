@@ -48,13 +48,13 @@ public class IngredientViewBoxController {
 		amountLabel.setPrefWidth(35);
 		unitLabel.setPrefWidth(100);
 		
-		nameLabel.setText(ing.getIngredientName() + ": ");
+		nameLabel.setText(ing.getIngredientName());
 		amountLabel.setText(String.valueOf(ing.getAmount()));
 		unitLabel.setText(ing.getUnit());
 		descriptionLabel.setText(ing.getDescription());
 		
 		HBox ingredientBox = new HBox();
-		ingredientBox.getChildren().addAll(nameLabel, amountLabel, unitLabel, descriptionLabel);
+		ingredientBox.getChildren().addAll(amountLabel,  unitLabel, nameLabel, descriptionLabel);
 		
 		return ingredientBox;
 	}

@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
 import controller.customized.IngredientBoxController;
 import controller.db.DBController;
+import entity.Ingredient;
 import entity.Recipe;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -39,7 +41,7 @@ import view.pop.SetBox;
  */
 public class CreateViewController implements Initializable{
 	
-	private Recipe selectedRecipe;
+	public static Recipe selectedRecipe;
 	private String username;
 	
 	private FileChooser imageChooser;
@@ -62,7 +64,7 @@ public class CreateViewController implements Initializable{
 	 */
 	public void initData(Recipe item, String username) {
 		this.username = username;
-		this.selectedRecipe = item;
+		selectedRecipe = item;
     	
     	if (selectedRecipe.getImage() == null) {
     		imageView.setImage(new Image("/image/demo.jpg"));
@@ -223,7 +225,10 @@ public class CreateViewController implements Initializable{
 	 * @throws IOException
 	 */
 	public void addIngredientClicked(ActionEvent event) throws IOException {
-		IngredientBoxController.add(selectedRecipe.getRecipeId(), selectedRecipe.getIngredients(), ingredientBox);
+		List<Ingredient> ings = IngredientBoxController.add(selectedRecipe.getRecipeId(), selectedRecipe.getIngredients(), ingredientBox);
+		if(ings!=null) {
+			selectedRecipe.setIngredients(ings);
+		}
 	}
 	
     /**

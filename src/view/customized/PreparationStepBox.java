@@ -44,10 +44,11 @@ public class PreparationStepBox {
 		this.container.getChildren().clear();
 		if(preps.size() == 0) {
 			// Create new step.
-			Button add_btn = new Button("Add Step");
-			add_btn.setPrefWidth(100);
+			Button add_btn = new Button("Add your first step");
+			add_btn.setPrefWidth(200);
 			add_btn.setId("secondary-button");
 			HBox buttonBox = new HBox();
+			buttonBox.setMaxWidth(620);
 			buttonBox.setPrefWidth(560);
 			buttonBox.setAlignment(Pos.CENTER_RIGHT);
 			buttonBox.getChildren().add(add_btn);
@@ -77,11 +78,11 @@ public class PreparationStepBox {
 	 */
 	public VBox generateOne(PreparationStep prep, VBox mainBox, int id) {
 		VBox oneBox = new VBox(5);
-		oneBox.setMaxWidth(580);
+		
 		
 		Label label = new Label(prep.getStep()+". "+prep.getDetail());
 		label.setWrapText(true);
-		label.setMaxWidth(560);
+		label.setMaxWidth(620);
 		
 		Button edit_btn = new Button("Edit");
 		edit_btn.setPrefWidth(100);
@@ -98,6 +99,7 @@ public class PreparationStepBox {
 		
 		HBox buttonBox = new HBox(5);
 		buttonBox.setPrefWidth(560);
+		buttonBox.setMaxWidth(620);
 		buttonBox.setAlignment(Pos.CENTER_RIGHT);
 		buttonBox.getChildren().addAll(edit_btn, delete_btn, insert_before_btn, insert_after_btn);
 		

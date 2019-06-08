@@ -66,13 +66,13 @@ public class IngredientBox {
 		amountLabel.setPrefWidth(35);
 		unitLabel.setPrefWidth(100);
 		
-		nameLabel.setText(ing.getIngredientName() + ": ");
+		nameLabel.setText(ing.getIngredientName());
 		amountLabel.setText(String.valueOf(ing.getAmount()));
 		unitLabel.setText(ing.getUnit());
 		descriptionLabel.setText(ing.getDescription());
 		
 		HBox ingBox = new HBox();
-		ingBox.getChildren().addAll(nameLabel, amountLabel, unitLabel, descriptionLabel);
+		ingBox.getChildren().addAll(amountLabel, unitLabel, nameLabel, descriptionLabel);
 		
 		Button edit_btn = new Button("Edit");
 		edit_btn.setPrefWidth(100);

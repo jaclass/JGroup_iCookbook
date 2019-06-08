@@ -122,7 +122,10 @@ public class RecipeViewController implements Initializable {
 	 * @param event
 	 */
 	public void changeButtonPushed(ActionEvent event) {
-		String num = (new SetBox("Change Serve Number:", "Please input the new value:")).display();
+		String num = (new SetBox("Change Serve Number:", "Current Serve Number: "+selectedRecipe.getServeNum())).display();
+		if(num==null) {
+			return ;
+		}
 		if(!num.matches("^[1-9]\\d*$")) {
 			AlertBox.display("Invalid", "You can just input the positive integer!");
 		}else {

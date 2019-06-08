@@ -54,7 +54,6 @@ public class HomeViewController implements Initializable {
 	public void initData(String username) {
 		this.username = username;
 		authorLabel.setText(username);
-		
 		showAllRecipes(username);
 	}
 
