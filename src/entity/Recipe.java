@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javafx.scene.image.Image;
+
 /** 
  * Recipe Entity.
  * 
@@ -23,6 +25,7 @@ public class Recipe implements Serializable {
 	private int cookingTime;
 	private List<Ingredient> ingredients = new ArrayList<>();
 	private List<PreparationStep> preparationSteps = new ArrayList<>();
+	private Image image;
 	
 	/**
 	 * Constructor without parameters.
@@ -250,6 +253,24 @@ public class Recipe implements Serializable {
 		this.preparationSteps = preparationSteps;
 	}
 	
+	/**
+	 * Get the image.
+	 * 
+	 * @return Image.
+	 */
+	public Image getImage() {
+		return image;
+	}
+
+	/**
+	 * Set the image.
+	 * 
+	 * @param image Image.
+	 */
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
 	/**
 	 * Add the ingredient to recipe.
 	 * 

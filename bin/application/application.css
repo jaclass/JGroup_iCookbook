@@ -1,16 +1,53 @@
 /* Set the whole background. */
 .root {
 	-fx-background: white;
+	-fx-font-size: 13px;
 }
 
 /* Set the whole button. */
 .button {
-    -fx-background-color: #AFB42B;
-    -fx-background-radius: 2, 2;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: #87c0cd;
+    -fx-background-radius: 3, 3;
+    -fx-background-insets: 1, 1;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 1 );
     -fx-text-fill: black;
+    -fx-font-size: 12px;
     -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #113f67;
+    -fx-background-radius: 3, 3;
+    -fx-background-insets: 1, 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 1 );
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+#secondary-button {
+	-fx-background-color: #f3f9fb;
+    -fx-background-radius: 3, 3;
+    -fx-background-insets: 1, 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 1 );
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+#secondary-button:hover {
+    -fx-background-color: #87c0cd;
+    -fx-background-radius: 3, 3;
+    -fx-background-insets: 1, 1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0.0, 0, 1 );
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+}
+
+/* Set the whole text-field. */
+.text-field {
+	-fx-font-size: 12px;
 }
 
 /* Set the listcell and listview. */
@@ -55,8 +92,17 @@
 /* The customized recipe box. */
 #recipe-box {
 	-fx-border-width: 1;
-	-fx-border-color: #F0F4C3;
-	-fx-background-color: #F0F4C3;
+	-fx-border-color: #f3f9fb;
+	-fx-background-color: #f3f9fb;
+}
+
+#recipe-name {
+	-fx-font-size: 20px;
+	-fx-font-weight: bold;
+}
+
+#recipe-infomation-box {
+	-fx-font-size: 13px;
 }
 
 /* The scroll bar. */
@@ -90,15 +136,15 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(black,90%);
+    -fx-background-color: derive(black, 90%);
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
 }
 
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{
-	-fx-background-color: derive(gray,80%);
-	-fx-border-color: derive(gray,80%);
+	-fx-background-color: white /* derive(gray, 80%) */;
+	-fx-border-color: white /* derive(gray, 80%) */;
 	-fx-background-radius: 3em;
 	-fx-border-radius: 3em;
 }
@@ -125,7 +171,7 @@
  
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(black,90%);
+    -fx-background-color: derive(black, 90%);
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
 }

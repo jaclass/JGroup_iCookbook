@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../application/application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.CreateViewController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../../application/application.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.view.CreateViewController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" spacing="10.0">
          <children>
@@ -25,16 +21,31 @@
                   <Region prefHeight="25.0" prefWidth="470.0" />
                </children>
             </HBox>
-            <ScrollPane prefHeight="355.0" prefWidth="580.0">
+            <ScrollPane prefHeight="345.0" prefWidth="580.0">
                <content>
                   <VBox prefWidth="580.0">
                      <children>
                         <Label fx:id="recipeNameLabel" alignment="CENTER" prefWidth="580.0" text="Label">
                            <font>
-                              <Font size="30.0" />
+                              <Font name="System Bold" size="25.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
                         </Label>
-                        <HBox>
+                        <VBox alignment="TOP_CENTER">
+                           <children>
+                              <ImageView fx:id="imageView" fitHeight="180.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </VBox.margin></ImageView>
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#chooseImageButtonPushed" prefWidth="100.0" text="Choose Image">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" top="5.0" />
+                                 </VBox.margin></Button>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Author: ">
                                  <font>
@@ -48,7 +59,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Serve Number: ">
                                  <font>
@@ -60,7 +71,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#updateSerNum" styleClass="primary-line-btn" text="edit">
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#updateSerNum" prefWidth="50.0" styleClass="primary-line-btn" text="Edit">
                                  <font>
                                     <Font size="8.0" />
                                  </font>
@@ -70,7 +81,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Preparation Time: ">
                                  <font>
@@ -87,7 +98,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#updatePreparationTime" styleClass="primary-line-btn" text="edit">
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#updatePreparationTime" prefWidth="50.0" styleClass="primary-line-btn" text="Edit">
                                  <font>
                                     <Font size="8.0" />
                                  </font>
@@ -97,7 +108,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT" prefHeight="25.0">
                            <children>
                               <Label text="Cooking Time: ">
                                  <font>
@@ -114,7 +125,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" onAction="#updateCookingTime" styleClass="primary-line-btn" text="edit">
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#updateCookingTime" prefWidth="50.0" styleClass="primary-line-btn" text="Edit">
                                  <font>
                                     <Font size="8.0" />
                                  </font>
@@ -124,25 +135,22 @@
                               </Button>
                            </children>
                         </HBox>
-                        <HBox>
-                           <children>
-                              <Label text="Ingredients:">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <Button mnemonicParsing="false" onAction="#addIngredientClicked" styleClass="primary-line-btn" text="add">
-                                 <font>
-                                    <Font size="8.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <Label prefHeight="25.0" text="Ingredients:">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Button id="secondary-button" mnemonicParsing="false" onAction="#addIngredientClicked" prefWidth="100.0" styleClass="primary-line-btn" text="Add Ingredient">
+                           <font>
+                              <Font size="8.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="460.0" />
+                           </VBox.margin>
+                        </Button>
+                        <HBox alignment="CENTER_LEFT" />
                         <VBox fx:id="ingredientBox" maxWidth="560.0" prefWidth="560.0" />
-      		                  <Label prefWidth="580.0" text="Preparation Steps:">
+      		                  <Label prefHeight="25.0" prefWidth="580.0" text="Preparation Steps:">
       		                     <font>
       		                        <Font name="System Bold" size="13.0" />
       		                     </font>

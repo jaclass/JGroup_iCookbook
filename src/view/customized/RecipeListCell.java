@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -52,7 +51,11 @@ public class RecipeListCell extends ListCell<Recipe>{
 		
         if (item != null && !empty) {
         	ImageView photo = new ImageView();
-        	photo.setImage(new Image("/image/demo.jpg"));
+        	if (item.getImage() == null) {
+				photo.setImage(new Image("/image/demo.jpg"));
+			} else {
+				photo.setImage(item.getImage());
+			}
         	photo.setFitHeight(110);
         	photo.setFitWidth(120);
         	
@@ -67,13 +70,14 @@ public class RecipeListCell extends ListCell<Recipe>{
         	Label cookingTimeLabel = new Label();
         	Label unit = new Label();
         	
-        	recipeNameLabel.setFont(new Font(20));
         	recipeNameLabel.setText(item.getRecipeName());
+        	recipeNameLabel.setId("recipe-name");
         	
         	authorLabel.setText(item.getAuthor());
         	authorTitle.setText("Author: ");
-        	HBox authoHBox = new HBox();
-        	authoHBox.getChildren().addAll(authorTitle, authorLabel);
+        	HBox authorHBox = new HBox();
+        	authorHBox.getChildren().addAll(authorTitle, authorLabel);
+        	authorHBox.setId("recipe-infomation-box");
         	
         	serveNumTitle.setText("Serve Number: ");
         	serveNumLabel.setText(String.valueOf(item.getServeNum()));
@@ -85,6 +89,7 @@ public class RecipeListCell extends ListCell<Recipe>{
         	
         	HBox amountHBox = new HBox();
         	amountHBox.getChildren().addAll(serveNumTitle, serveNumLabel, preparationTimeTitle, preparationTimeLabel, cookingTimeTitle, cookingTimeLabel, unit);
+        	amountHBox.setId("recipe-infomation-box");
         	
         	Button viewButton = new Button("View");
         	viewButton.setPrefWidth(60);
@@ -118,7 +123,7 @@ public class RecipeListCell extends ListCell<Recipe>{
         	
         	VBox infoVBox = new VBox();
         	infoVBox.setAlignment(Pos.CENTER_LEFT);
-        	infoVBox.getChildren().addAll(recipeNameLabel, authoHBox, amountHBox, buttonBox);
+        	infoVBox.getChildren().addAll(recipeNameLabel, authorHBox, amountHBox, buttonBox);
         	
         	HBox recipeHBox = new HBox(10);
         	recipeHBox.setId("recipe-box");

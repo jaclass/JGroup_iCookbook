@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import controller.customized.PreparationStepBoxController;
-import controller.db.DBController;
 import entity.PreparationStep;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,8 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.pop.AlertBox;
-import view.pop.SetBox;
 
 /**
  * Box for preparation steps on which users can do some modify.
@@ -41,31 +38,26 @@ public class PreparationStepBox {
 	}
 	
 	/**
-	 * Generate the preparation steps.
-	 */
-	/*
-	 * public void generate() {
-	 * PreparationStepBoxController.generate(this.container, this.preps,
-	 * this.recipe_id); }
-	 */
-	
-	/**
 	 * Generate the whole box.
-	 * 
-	 * @param container Box container.
-	 * @param preps PreparationStep.
-	 * @param id Recipe id.
 	 */
 	public void generate() {
 		this.container.getChildren().clear();
-		if(preps.size()==0) {	// create a new recipe
-			Button add_btn = new Button("add your first preparation step!");
-			this.container.getChildren().add(add_btn);
-			//add listener to add_btn
+		if(preps.size() == 0) {
+			// Create new step.
+			Button add_btn = new Button("Add Step");
+			add_btn.setPrefWidth(100);
+			add_btn.setId("secondary-button");
+			HBox buttonBox = new HBox();
+			buttonBox.setPrefWidth(560);
+			buttonBox.setAlignment(Pos.CENTER_RIGHT);
+			buttonBox.getChildren().add(add_btn);
+			this.container.getChildren().add(buttonBox);
+			
+			// Add listener.
 			add_btn.setOnAction((e)->{
 				PreparationStepBoxController.addFirst(this.container, this.recipe_id, add_btn);
 			});
-			return ;
+			return;
 		}
 		Iterator<PreparationStep> it = preps.iterator();
 		while(it.hasNext()) {
@@ -93,12 +85,16 @@ public class PreparationStepBox {
 		
 		Button edit_btn = new Button("Edit");
 		edit_btn.setPrefWidth(100);
+		edit_btn.setId("secondary-button");
 		Button delete_btn = new Button("Delete");
 		delete_btn.setPrefWidth(100);
+		delete_btn.setId("secondary-button");
 		Button insert_before_btn = new Button("Insert Before");
 		insert_before_btn.setPrefWidth(100);
+		insert_before_btn.setId("secondary-button");
 		Button insert_after_btn = new Button("Insert After");
 		insert_after_btn.setPrefWidth(100);
+		insert_after_btn.setId("secondary-button");
 		
 		HBox buttonBox = new HBox(5);
 		buttonBox.setPrefWidth(560);

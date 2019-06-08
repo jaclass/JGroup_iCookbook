@@ -1,8 +1,10 @@
 package entity;
 
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import controller.db.DBController;
+import javafx.scene.image.Image;
 
 /**
  * A class for the program entry point and some test recipes.
@@ -10,7 +12,7 @@ import controller.db.DBController;
  * @author breukerm
  * 
  */
-public class CookBookApp {
+public class CookBookApp{
 
 	/**
 	 * Creates a Gong Bao Jiding recipe.
@@ -128,25 +130,30 @@ public class CookBookApp {
 	 * Program entry point. 
 	 * 
 	 * @param args Command line arguments.
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
 		CookBook cb = new CookBook("Chinese Cuisine");
 				
 		// Create two users and insert to DB. 
 		User alice = new User("alice","980102"); 
-		User ben = new User("ben", "920813");
+		User hellen = new User("hellen", "990909");
 		DBController.insertUser(alice); 
-		DBController.insertUser(ben);
+		DBController.insertUser(hellen);
 		
 		// Create three recipes and add the user. 
+		// System.out.println(new File(".").getAbsolutePath());
 		Recipe gbjd =createGongBaoJiding(); 
 		gbjd.setAuthor(alice.getUsername()); 
+		gbjd.setImage(new Image(new FileInputStream("src/image/gbjd.jpg")));
 		cb.add(gbjd);
 		Recipe hsr = createHongShaoRou(); 
-		hsr.setAuthor(ben.getUsername());
+		hsr.setAuthor(hellen.getUsername());
+		hsr.setImage(new Image(new FileInputStream("src/image/hsr.jpg")));
 		cb.add(hsr); 
 		Recipe slf = createSuanLaFen();
-		slf.setAuthor(ben.getUsername()); 
+		slf.setAuthor(hellen.getUsername()); 
+		slf.setImage(new Image(new FileInputStream("src/image/slf.jpg")));
 		cb.add(slf);
 		
 		// Insert these recipes to DB.
@@ -154,38 +161,27 @@ public class CookBookApp {
 		DBController.insertRecipe(cb.getRecipe("Hong Shao Rou"));
 		DBController.insertRecipe(cb.getRecipe("Suan La Fen"));
 		
-		// Get one recipe from the object cookbook and print it.
-		System.out.println("----------Get one recipe.----------"); 
-		Recipe recipe =cb.getRecipe("Gong Bao Jiding"); 
-		if (recipe != null) {
-			System.out.println(recipe); 
-		}
-		
-		// Change the serve number from the recipe.
-		System.out.println("----------Change the serve number.----------");
-		recipe.setServeNum(7); 
-		System.out.println(recipe);
-		
-		// Search for recipes by name from DB (Case-insensitive).
-		System.out.println("----------Search for recipes by name.----------");
-		List<Recipe> list = DBController.searchRecipeByName("rou"); 
-		for(Recipe re : list) {
-			System.out.println(re); 
-		}
-		
-		// Delete one recipe.
-		System.out.println("----------Delete the recipe \"Suan La Fen\".----------");
-		int result = DBController.deleteRecipe(slf); 
-		if (result != 0) {
-			System.out.println("Succesful deletion!"); 
-		} else {
-			System.out.println("Failed deletion!"); 
-		}
-		
-		System.out.println((DBController.getAllRecipes()).size());
-		System.out.println(DBController.getRecipeByUsername("alice").size());
-		System.out.println(DBController.searchRecipeByUsernameAndName("alice","Gong Bao"));
-		System.out.println(DBController.searchRecipeByName("").size());
+		/*
+		 * // Get one recipe from the object cookbook and print it.
+		 * System.out.println("----------Get one recipe.----------"); Recipe recipe
+		 * =cb.getRecipe("Gong Bao Jiding"); if (recipe != null) {
+		 * System.out.println(recipe); }
+		 * 
+		 * // Change the serve number from the recipe.
+		 * System.out.println("----------Change the serve number.----------");
+		 * recipe.setServeNum(7); System.out.println(recipe);
+		 * 
+		 * // Search for recipes by name from DB (Case-insensitive).
+		 * System.out.println("----------Search for recipes by name.----------");
+		 * List<Recipe> list = DBController.searchRecipeByName("rou"); for(Recipe re :
+		 * list) { System.out.println(re); }
+		 * 
+		 * // Delete one recipe.
+		 * System.out.println("----------Delete the recipe \"Suan La Fen\".----------");
+		 * int result = DBController.deleteRecipe(slf); if (result != 0) {
+		 * System.out.println("Succesful deletion!"); } else {
+		 * System.out.println("Failed deletion!"); }
+		 */
 	}
 	
 }

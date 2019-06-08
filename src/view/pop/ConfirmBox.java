@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class ConfirmBox {
 	
-	static boolean answer=false;
+	static boolean answer = false;
 	
 	/**
 	 * Display the confrim box.
@@ -27,6 +27,7 @@ public class ConfirmBox {
 	 * @param message Message to show.
 	 * @return Yes or no button pushed.
 	 */
+	@SuppressWarnings("unused")
 	public static boolean display(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
@@ -34,11 +35,11 @@ public class ConfirmBox {
 		window.setWidth(400);
 		window.setHeight(130);
 		window.setResizable(false);
-		window.getIcons().add(new Image("/image/app_icon.png"));
+		window.getIcons().add(new Image("/image/icon.png"));
 		
 		Label label = new Label();
 		label.setText(message);
-		boolean ret;
+
 		Button yesButton = new Button("Yes");
 		Button noButton = new Button("No");
 		yesButton.setPrefWidth(50);
@@ -53,6 +54,7 @@ public class ConfirmBox {
 			window.close();
 		});
 		
+		boolean ret;
 		ret = answer;
 		answer = false;
 		

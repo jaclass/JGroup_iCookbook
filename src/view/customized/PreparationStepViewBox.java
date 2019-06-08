@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
  *
  */
 public class PreparationStepViewBox{
+	
 	private List<PreparationStep> steps;
 	private VBox container;
 	
@@ -34,6 +35,5 @@ public class PreparationStepViewBox{
 	public void generate() {
 		PreparationStepViewBoxController.generate(this.steps, this.container);
 	}
-
 	
 }

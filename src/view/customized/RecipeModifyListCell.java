@@ -18,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import view.pop.ConfirmBox;
 
@@ -54,7 +53,11 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
 		
         if (item != null && !empty) {
         	ImageView photo = new ImageView();
-        	photo.setImage(new Image("/image/demo.jpg"));
+        	if (item.getImage() == null) {
+				photo.setImage(new Image("/image/demo.jpg"));
+			} else {
+				photo.setImage(item.getImage());
+			}
         	photo.setFitHeight(110);
         	photo.setFitWidth(120);
         	
@@ -68,13 +71,15 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
         	Label cookingTimeTitle = new Label();
         	Label cookingTimeLabel = new Label();
         	Label unit = new Label();
-        	recipeNameLabel.setFont(new Font(20));
+        	
         	recipeNameLabel.setText(item.getRecipeName());
+        	recipeNameLabel.setId("recipe-name");
         	
         	authorLabel.setText(item.getAuthor());
         	authorTitle.setText("Author: ");
         	HBox authorBox = new HBox();
         	authorBox.getChildren().addAll(authorTitle, authorLabel);
+        	authorBox.setId("recipe-infomation-box");
         	
         	serveNumTitle.setText("Serve Number: ");
         	serveNumLabel.setText(String.valueOf(item.getServeNum()));
@@ -86,6 +91,7 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
         	
         	HBox amountHBox = new HBox();
         	amountHBox.getChildren().addAll(serveNumTitle, serveNumLabel, preparationTimeTitle, preparationTimeLabel, cookingTimeTitle, cookingTimeLabel, unit);
+        	amountHBox.setId("recipe-infomation-box");
         	
         	Button editButton = new Button("Edit");
         	editButton.setPrefWidth(60);

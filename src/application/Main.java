@@ -27,15 +27,15 @@ public class Main extends Application {
 	        Scene scene = new Scene(root);
 	        primaryStage.setScene(scene);
 	        
-			primaryStage.setTitle("iCookbook --- JGroup");
-			primaryStage.getIcons().add(new Image("/image/app_icon.png"));
+			primaryStage.setTitle("JGroup's Cookbook");
+			primaryStage.getIcons().add(new Image("/image/icon.png"));
 			primaryStage.setResizable(false);
 	        primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Main function to launch the first stage.
 	 * 

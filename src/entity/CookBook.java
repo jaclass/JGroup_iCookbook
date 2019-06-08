@@ -83,7 +83,7 @@ public class CookBook implements Serializable{
 		while(it.hasNext()) {
 			Recipe re = it.next();
 			if(re.getRecipeName().equals(name)){
-				System.out.println("You choose the recipe: " + re.getRecipeName() + ".");
+				System.out.println("Recipe: " + re.getRecipeName() + ".");
 				return re;
 			}
 		}

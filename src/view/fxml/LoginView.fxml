@@ -15,22 +15,34 @@
          <children>
             <Label text="Sign In">
                <font>
-                  <Font size="25.0" />
+                  <Font name="System Bold" size="25.0" />
                </font></Label>
             <HBox alignment="CENTER">
                <children>
-                  <Label prefWidth="80.0" text="Username" />
-                  <TextField fx:id="usernameField" prefWidth="120.0" />
+                  <Label prefWidth="70.0" text="Username">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Label>
+                  <TextField fx:id="usernameField" prefWidth="130.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER">
                <children>
-                  <Label prefWidth="80.0" text="Password" />
-                  <PasswordField fx:id="passwordField" prefWidth="120.0" />
+                  <Label prefWidth="70.0" text="Password">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Label>
+                  <PasswordField fx:id="passwordField" prefWidth="130.0" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#loginButtonPushed" prefWidth="200.0" text="Sign In" />
-            <Button mnemonicParsing="false" onAction="#registerButtonPushed" prefWidth="200.0" text="Create Account" />
+            <Button mnemonicParsing="false" onAction="#loginButtonPushed" prefWidth="200.0" text="Sign In">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#registerButtonPushed" prefWidth="200.0" text="Create Account">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
          </children>
       </VBox>
    </children>

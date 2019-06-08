@@ -17,7 +17,7 @@ public class DBUtils {
 	public static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
 	public static final String URL = "jdbc:mysql://127.0.0.1:3306/cookbook?serverTimezone=UTC";
 	public static final String USERNAME = "root";
-	public static final String PASSWORD = "a299792458";
+	public static final String PASSWORD = "123456";
 	
 	// Loading the database driver.
 	static {
@@ -99,7 +99,7 @@ public class DBUtils {
 	}
 	
 	/**
-	 * Close one resouce.
+	 * Close Connection resouce.
 	 * Overload.
 	 * 
 	 * @param conn Connection.
@@ -108,6 +108,38 @@ public class DBUtils {
 		try {
 			if(conn != null) {
 				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Close Statement resouce.
+	 * Overload.
+	 * 
+	 * @param stmt Statement.
+	 */
+	public static void close(Statement stmt) {
+		try {
+			if(stmt != null) {
+				stmt.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Close ResultSet resouce.
+	 * Overload.
+	 * 
+	 * @param rs ResultSet.
+	 */
+	public static void close(ResultSet rs) {
+		try {
+			if(rs != null) {
+				rs.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

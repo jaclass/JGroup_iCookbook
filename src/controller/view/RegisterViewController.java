@@ -37,6 +37,7 @@ public class RegisterViewController implements Initializable {
     /**
      * When this method is called, it will change the scene to LoginView.
      * 
+     * @param event
      * @throws IOException 
      */
     public void createAccountButtonPushed(ActionEvent event) throws IOException {

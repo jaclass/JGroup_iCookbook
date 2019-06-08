@@ -30,7 +30,7 @@ public class AlertBox {
 		window.setWidth(400);
 		window.setHeight(130);
 		window.setResizable(false);
-		window.getIcons().add(new Image("/image/app_icon.png"));
+		window.getIcons().add(new Image("/image/icon.png"));
 		
 		Label label = new Label();
 		label.setText(message);

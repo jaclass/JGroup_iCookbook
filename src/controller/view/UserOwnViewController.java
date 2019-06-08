@@ -12,15 +12,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
-import javafx.stage.Modality;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import view.customized.RecipeModifyListCell;
 import view.pop.AlertBox;
@@ -39,6 +36,7 @@ public class UserOwnViewController implements Initializable{
     private ObservableList<Recipe> userRecipes;
 	
 	@FXML private ListView<Recipe> recipeListView;
+	@FXML private VBox noRecipeBox;
     
     /**
      * Initialize the data.
@@ -48,13 +46,18 @@ public class UserOwnViewController implements Initializable{
     public void initData(String username) {
     	this.username = username;
     	
-    	userRecipes = FXCollections.observableArrayList();
-    	userRecipes.clear();
-    	userRecipes.addAll(DBController.getRecipeByUsername(username));
-    	
-    	recipeListView.getItems().clear();
-    	recipeListView.getItems().addAll(userRecipes);
-    	recipeListView.setCellFactory(param -> new RecipeModifyListCell(username));
+    	if (DBController.getRecipeByUsername(username).size() == 0) {
+    		Label noRecipeLabel = new Label("Oh! You have no recipe! Create one now!");
+    		noRecipeBox.getChildren().add(noRecipeLabel);
+		} else {
+			userRecipes = FXCollections.observableArrayList();
+			userRecipes.clear();
+			userRecipes.addAll(DBController.getRecipeByUsername(username));
+			
+			recipeListView.getItems().clear();
+			recipeListView.getItems().addAll(userRecipes);
+			recipeListView.setCellFactory(param -> new RecipeModifyListCell(username));
+		}
     }
 	
     /**
@@ -112,23 +115,23 @@ public class UserOwnViewController implements Initializable{
     public void createButtonPushed(ActionEvent event) throws IOException {
     	SetBox popBox = new SetBox("Recipe Name", "Please input the recipe name:");
 		String get = popBox.display();
-		if(get==null) { // X button
-			return ;
-		}
-		else if(get.trim().length() == 0) { // null String
+		if(get == null) {
+			return;
+		}else if(get.trim().length() == 0) {
 			AlertBox.display("No Recipe Name", "You must put the recipe name!");
-		}else { // valid input
+		}else {
+			// Valid input.
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("view/fxml/CreateView.fxml"));
 			Parent createViewParent;
 			try {
 				createViewParent = loader.load();
 				Scene createViewScene = new Scene(createViewParent);
+				
 				// Insert an new empty recipe into database.
 				Recipe insertedRecipe = new Recipe();
 				insertedRecipe.setRecipeName(get);
 				insertedRecipe.setAuthor(this.username);
 				int inserted_id = DBController.insertRecipe(insertedRecipe);
-				//System.out.println(inserted_id);
 				
 				// This line gets the Stage information.
 				Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();

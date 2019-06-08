@@ -13,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -38,6 +40,7 @@ public class RecipeViewController implements Initializable {
 	@FXML private Label serveNumLabel;
 	@FXML private Label preparationTimeLabel;
 	@FXML private Label cookingTimeLabel;
+	@FXML private ImageView imageView;
 	
 	@FXML private VBox ingredientBox;
 	@FXML private VBox stepBox;
@@ -51,6 +54,11 @@ public class RecipeViewController implements Initializable {
     	this.selectedRecipe = recipe;
     	this.username = username;
     	
+    	if (selectedRecipe.getImage() == null) {
+    		imageView.setImage(new Image("/image/demo.jpg"));
+    	} else {
+    		imageView.setImage(selectedRecipe.getImage());
+    	}
     	usernameLabel.setText(username);
     	authorLabel.setText(selectedRecipe.getAuthor());
     	recipeNameLabel.setText(selectedRecipe.getRecipeName());
@@ -114,7 +122,7 @@ public class RecipeViewController implements Initializable {
 	 * @param event
 	 */
 	public void changeButtonPushed(ActionEvent event) {
-		String num = SetBox.display("Change Serve Number:", "Please input the new value:");
+		String num = (new SetBox("Change Serve Number:", "Please input the new value:")).display();
 		if(!num.matches("^[1-9]\\d*$")) {
 			AlertBox.display("Invalid", "You can just input the positive integer!");
 		}else {

@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 public class IngredientViewBoxController {
 
 	/**
-	 * Genrate the box.
+	 * Genrate the whole box.
 	 * 
 	 * @param ingredients List of ingredients.
 	 * @param container Box container.
@@ -44,9 +44,9 @@ public class IngredientViewBoxController {
 		Label unitLabel = new Label(); 
 		Label descriptionLabel = new Label();
 		
-		nameLabel.setPrefWidth(120);
-		amountLabel.setPrefWidth(30);
-		unitLabel.setPrefWidth(90);
+		nameLabel.setPrefWidth(170);
+		amountLabel.setPrefWidth(35);
+		unitLabel.setPrefWidth(100);
 		
 		nameLabel.setText(ing.getIngredientName() + ": ");
 		amountLabel.setText(String.valueOf(ing.getAmount()));

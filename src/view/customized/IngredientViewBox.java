@@ -7,7 +7,7 @@ import entity.Ingredient;
 import javafx.scene.layout.VBox;
 
 /**
- * Cell to place the ingredient.
+ * Box to place the ingredient.
  * 
  * @author JGroup
  *

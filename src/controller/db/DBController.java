@@ -10,6 +10,7 @@ import entity.Ingredient;
 import entity.PreparationStep;
 import entity.Recipe;
 import entity.User;
+import javafx.scene.image.Image;
 
 /**
  * Methods to deal with DB.
@@ -48,6 +49,7 @@ public class DBController {
 	    
 	    return ret;
 	}
+	
 	/**
 	 * Update the ingredient
 	 * 
@@ -78,6 +80,7 @@ public class DBController {
 		}
 		return ret;
 	}
+	
 	/**
 	 * Delete Ingredient.
 	 * 
@@ -90,6 +93,7 @@ public class DBController {
 	    PreparedStatement pstmt = null;
 	    String sql = "delete from ingredient where recipe_id=? and ingredient_name=?";
 	    int ret = 0;
+	    
 	    try {
 	        pstmt = conn.prepareStatement(sql);
 	        pstmt.setInt(1, recipe_id);
@@ -104,6 +108,65 @@ public class DBController {
 	    return ret;
 	}
 	
+    /**
+     * Insert PreparationStep. Update the step = step + 1 behind the inserted step.
+     * 
+     * @param recipe_id Foreign key for the PreparationStep.
+     * @param step Order of the PreparationStep in the recipe.
+     * @param ps PreaprationStep to be inserted.
+     * @return Updated rows.
+     */
+    public static int insertPreparationStep(int recipe_id, int step, PreparationStep ps) {
+    	Connection conn = DBUtils.getMySqlConn();
+    	PreparedStatement pstmt_search = null;
+    	PreparedStatement pstmt_insert = null;
+    	String search_sql = "select step from preparation_step where recipe_id=? and step>=?";
+    	String update_sql = "update preparation_step set step=? where recipe_id=? and step=?";
+    	String insert_sql = "insert into preparation_step(recipe_id,step,detail) values(?,?,?)";
+    	ResultSet rs = null;
+    	List<Integer> list = new ArrayList<>();
+    	int ret = 0;
+    	
+    	try {
+    		// Get all the step larger than insert step and sort them.
+    		pstmt_search = conn.prepareStatement(search_sql);
+    		pstmt_search.setInt(1, recipe_id);
+    		pstmt_search.setInt(2, step);
+    		rs = pstmt_search.executeQuery();
+    		while(rs.next()) { 
+    			list.add(rs.getInt(1));
+    		}
+    		Collections.sort(list);
+    		Collections.reverse(list);
+    		
+    		Iterator<Integer> it = list.iterator();
+    		while(it.hasNext()) {
+    			PreparedStatement pstmt_update = null;
+    			Integer target = it.next();
+    			int target_step = target != null ? target : 0;
+    			pstmt_update = conn.prepareStatement(update_sql);
+    			pstmt_update.setInt(1, target_step + 1);
+    			pstmt_update.setInt(2, recipe_id);
+    			pstmt_update.setInt(3, target_step);
+    			pstmt_update.executeUpdate();
+    			pstmt_update.close();
+    		}
+    		
+    		pstmt_insert = conn.prepareStatement(insert_sql);
+    		pstmt_insert.setInt(1, recipe_id);
+    		pstmt_insert.setInt(2, step);
+    		pstmt_insert.setString(3, ps.getDetail());
+    		ret = pstmt_insert.executeUpdate();
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	} finally {
+    		DBUtils.close(rs, pstmt_search, conn);
+    		DBUtils.close(pstmt_insert);
+    	}
+    	
+    	return ret;
+    }
+    
 	/**
 	 * Update the step = step + 1 behind the inserted step.
 	 * 
@@ -129,69 +192,10 @@ public class DBController {
 	    } finally {
 			DBUtils.close(pstmt, conn);
 		}
+		
 		return ret;
 	}
 
-	/**
-	 * Insert PreparationStep. Update the step = step + 1 behind the inserted step.
-	 * 
-	 * @param recipe_id Foreign key for the PreparationStep.
-	 * @param step Order of the PreparationStep in the recipe.
-	 * @param ps PreaprationStep to be inserted.
-	 * @return Updated rows.
-	 */
-	public static int insertPreparationStep(int recipe_id, int step, PreparationStep ps) {
-		Connection conn = DBUtils.getMySqlConn();
-	    PreparedStatement pstmt_search = null;
-	    PreparedStatement pstmt_insert = null;
-	    String search_sql = "select step from preparation_step where recipe_id=? and step>=?";
-	    String update_sql = "update preparation_step set step=? where recipe_id=? and step=?";
-	    String insert_sql = "insert into preparation_step(recipe_id,step,detail) values(?,?,?)";
-	    ResultSet rs = null;
-	    List<Integer> list = new ArrayList<>();
-	    
-	    int ret = 0;
-	    
-	    try {
-	    	// Get all the step larger than insert step and sort them.
-	    	pstmt_search = conn.prepareStatement(search_sql);
-	    	pstmt_search.setInt(1, recipe_id);
-	    	pstmt_search.setInt(2, step);
-	    	rs = pstmt_search.executeQuery();
-	    	while(rs.next()) { 
-	    		list.add(rs.getInt(1));
-	    	}
-	    	Collections.sort(list);
-	    	Collections.reverse(list);
-
-	    	Iterator<Integer> it = list.iterator();
-	    	while(it.hasNext()) {
-	    		PreparedStatement pstmt_update = null;
-	    		Integer target = it.next();
-	    		int target_step = target != null ? target : 0;
-	    	    pstmt_update = conn.prepareStatement(update_sql);
-	    	    pstmt_update.setInt(1, target_step + 1);
-	    	    pstmt_update.setInt(2, recipe_id);
-		    	pstmt_update.setInt(3, target_step);
-		    	pstmt_update.executeUpdate();
-		    	pstmt_update.close();
-	    	}
-	    	
-	        pstmt_insert = conn.prepareStatement(insert_sql);
-	        pstmt_insert.setInt(1, recipe_id);
-	        pstmt_insert.setInt(2, step);
-	        pstmt_insert.setString(3, ps.getDetail());
-	        ret = pstmt_insert.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-			DBUtils.close(rs, pstmt_search, conn);
-			DBUtils.close(rs, pstmt_insert, conn);
-		}
-	    
-	    return ret;
-	}
-	
 	/**
 	 * Delete the PreparationStep. Update the step = step - 1 behind the inserted step.
 	 * 
@@ -241,8 +245,8 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-			DBUtils.close(pstmt_delete, conn);
-			DBUtils.close(pstmt_search, conn);
+			DBUtils.close(rs, pstmt_delete, conn);
+			DBUtils.close(pstmt_search);
 		}
 	    
 	    return ret;
@@ -258,7 +262,7 @@ public class DBController {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "insert into recipe(username,recipe_name,serve_num,preparation_time,cooking_time) values(?,?,?,?,?)";
+		String sql = "insert into recipe(username,recipe_name,serve_num,preparation_time,cooking_time,image) values(?,?,?,?,?,?)";
 	    int ret = 0;
 	    
 	    try {
@@ -268,6 +272,8 @@ public class DBController {
 	        pstmt.setInt(3, recipe.getServeNum());
 	        pstmt.setInt(4, recipe.getPreparationTime());
 	        pstmt.setInt(5, recipe.getCookingTime());
+	        // Insert the image to the database.
+	        pstmt.setBlob(6, ImageUtils.imageToByte(recipe.getImage()));
 	        ret = pstmt.executeUpdate();
 	        
 	        // Get the primary key of the recipe.
@@ -301,17 +307,19 @@ public class DBController {
 	}
 	
 	/**
-	 * update Recipe.
+	 * Update serve number.
 	 * 
-	 * @param recipe_id id of Recipe Entity to be updated.
-	 * @return num the updated number.
+	 * @param recipe_id Id of Recipe Entity to be updated.
+	 * @param num New number.
+	 * @return Updated rows.
 	 */
-	public static int updateServeNum(int recipe_id, int num ) {
+	public static int updateServeNum(int recipe_id, int num) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = "update recipe set serve_num=? where recipe_id=?";
 	    int ret = 0;
+	    
 	    try {
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setInt(1, num);
@@ -322,21 +330,24 @@ public class DBController {
 	    } finally {
 	    	DBUtils.close(rs, pstmt, conn);
 	    }
+	    
 	    return ret;
 	}
 	
 	/**
-	 * update Recipe.
+	 * Update preparation time.
 	 * 
-	 * @param recipe_id id of Recipe Entity to be updated.
-	 * @return time the updated preparation time.
+	 * @param recipe_id Id of Recipe Entity to be updated.
+	 * @param time New time.
+	 * @return Updated rows.
 	 */
-	public static int updatePrepTime(int recipe_id, int time ) {
+	public static int updatePrepTime(int recipe_id, int time) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "update recipe set preparation_time=? where recipe_id = ?";
+		String sql = "update recipe set preparation_time=? where recipe_id=?";
 	    int ret = 0;
+	    
 	    try {
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setInt(1, time);
@@ -347,21 +358,24 @@ public class DBController {
 	    } finally {
 	    	DBUtils.close(rs, pstmt, conn);
 	    }
+	    
 	    return ret;
 	}
 	
 	/**
-	 * update Recipe.
+	 * Update cooking time.
 	 * 
-	 * @param recipe_id id of Recipe Entity to be updated.
-	 * @return time the updated cooking time.
+	 * @param recipe_id Id of Recipe Entity to be updated.
+	 * @param time New time.
+	 * @return Updated rows.
 	 */
-	public static int updateCookTime(int recipe_id, int time ) {
+	public static int updateCookTime(int recipe_id, int time) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "update recipe set cooking_time=? where recipe_id = ?";
+		String sql = "update recipe set cooking_time=? where recipe_id=?";
 	    int ret = 0;
+	    
 	    try {
 	    	pstmt = conn.prepareStatement(sql);
 	    	pstmt.setInt(1, time);
@@ -372,6 +386,35 @@ public class DBController {
 	    } finally {
 	    	DBUtils.close(rs, pstmt, conn);
 	    }
+	    
+	    return ret;
+	}
+	
+	/**
+	 * Updated image.
+	 * 
+	 * @param recipe_id Id of Recipe Entity to be updated.
+	 * @param image New image.
+	 * @return Updated rows.
+	 */
+	public static int updateImage(int recipe_id, Image image) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "update recipe set image=? where recipe_id=?";
+	    int ret = 0;
+	    
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setBlob(1, ImageUtils.imageToByte(image));
+	    	pstmt.setInt(2, recipe_id);
+	    	ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBUtils.close(rs, pstmt, conn);
+	    }
+	    
 	    return ret;
 	}
 	
@@ -380,7 +423,7 @@ public class DBController {
 	 * Check the username with lower case.
 	 * 
 	 * @param user Inserted user.
-	 * @return Updated rows; -1 means the username cannot be inserted because it already exists.
+	 * @return Updated rows; 0 means the username cannot be inserted because it already exists.
 	 */
 	public static int insertUser(User user) {
 		Connection conn = DBUtils.getMySqlConn();
@@ -388,17 +431,17 @@ public class DBController {
 	    PreparedStatement insert_pstmt = null;
 	    String check_sql = "select * from user where username=?";
 	    String insert_sql = "insert into user(username,password) values(?,?)";
+	    ResultSet rs = null;
 	    int ret = 0;
 
 	    try {
 	    	check_pstmt = conn.prepareStatement(check_sql);
 	        check_pstmt.setString(1, user.getUsername());
-	        ResultSet rs = check_pstmt.executeQuery();
+	        rs = check_pstmt.executeQuery();
 	        // Username already exist.
 	        if(rs.next()) {
-	        	return -1;
+	        	return ret;
 	        }
-	        rs.close();
 	        
 	        insert_pstmt = conn.prepareStatement(insert_sql);
 	        insert_pstmt.setString(1, user.getUsername());
@@ -407,8 +450,8 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(check_pstmt, conn);
-			DBUtils.close(insert_pstmt, conn);
+	    	DBUtils.close(rs, check_pstmt, conn);
+			DBUtils.close(insert_pstmt);
 		}
 	    
 	    return ret;
@@ -514,7 +557,7 @@ public class DBController {
 		Connection conn = DBUtils.getMySqlConn();
 	    PreparedStatement pstmt = null;
 	    ResultSet rs = null;
-	    String sql = "select * from recipe where recipe_name = ?";
+	    String sql = "select * from recipe where recipe_name=?";
 	    Recipe result = null;
 	    
 	    try {
@@ -523,6 +566,7 @@ public class DBController {
 	        rs = pstmt.executeQuery();
 	        while(rs.next()) {
 	        	result = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	result.setImage(ImageUtils.byteToImage(rs.getBlob(7)));
 	        	result.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
 	        	result.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
 	        }
@@ -534,6 +578,13 @@ public class DBController {
 	    
 	    return result;
 	}
+	
+	/**
+	 * Get the recipe according to the recipe id.
+	 * 
+	 * @param id Recipe id.
+	 * @return Recipe.
+	 */
 	public static Recipe getRecipeById(int id) {
 		Connection conn = DBUtils.getMySqlConn();
 	    PreparedStatement pstmt = null;
@@ -547,6 +598,7 @@ public class DBController {
 	        rs = pstmt.executeQuery();
 	        while(rs.next()) {
 	        	result = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	result.setImage(ImageUtils.byteToImage(rs.getBlob(7)));
 	        	result.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
 	        	result.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
 	        }
@@ -558,6 +610,7 @@ public class DBController {
 	    
 	    return result;
 	}
+	
 	/**
 	 * Get recipes by username.
 	 * 
@@ -576,6 +629,38 @@ public class DBController {
 	        rs = pstmt.executeQuery();
 	        while(rs.next()) {
 	        	Recipe recipe = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	recipe.setImage(ImageUtils.byteToImage(rs.getBlob(7)));
+	        	recipe.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
+	        	recipe.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
+	        	result.add(recipe);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+			DBUtils.close(rs, pstmt, conn);
+		}
+	    
+	    return result;
+	}
+	
+	/**
+	 * Get all recipes.
+	 * 
+	 * @return A list of recipes.
+	 */
+	public static List<Recipe> getAllRecipes(){
+		Connection conn = DBUtils.getMySqlConn();
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String sql = "select * from recipe";
+	    List<Recipe> result = new ArrayList<>();
+	    
+	    try {
+	        pstmt = conn.prepareStatement(sql);
+	        rs = pstmt.executeQuery();
+	        while(rs.next()) {
+	        	Recipe recipe = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	recipe.setImage(ImageUtils.byteToImage(rs.getBlob(7)));
 	        	recipe.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
 	        	recipe.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
 	        	result.add(recipe);
@@ -608,68 +693,7 @@ public class DBController {
 	        rs = pstmt.executeQuery();
 	        while(rs.next()) {
 	        	Recipe recipe = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
-	        	recipe.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
-	        	recipe.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
-	        	result.add(recipe);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-			DBUtils.close(rs, pstmt, conn);
-		}
-	    
-	    return result;
-	}
-	
-	/**
-	 * Get recipes by user name.
-	 * 
-	 * @return A list of recipes.
-	 */
-	public static List<Recipe> searchRecipeByUsernameAndName(String username, String name){
-		Connection conn = DBUtils.getMySqlConn();
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
-	    String sql = "select * from recipe where username = ? and recipe_name like ?";
-	    List<Recipe> result = new ArrayList<>();
-	    
-	    try {
-	        pstmt = conn.prepareStatement(sql);
-	        pstmt.setObject(1, username);
-	        pstmt.setObject(2, "%" + name + "%");
-	        rs = pstmt.executeQuery();
-	        while(rs.next()) {
-	        	Recipe recipe = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
-	        	recipe.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
-	        	recipe.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
-	        	result.add(recipe);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-			DBUtils.close(rs, pstmt, conn);
-		}
-	    
-	    return result;
-	}
-	
-	/**
-	 * Get all recipes.
-	 * 
-	 * @return A list of recipes.
-	 */
-	public static List<Recipe> getAllRecipes(){
-		Connection conn = DBUtils.getMySqlConn();
-	    PreparedStatement pstmt = null;
-	    ResultSet rs = null;
-	    String sql = "select * from recipe";
-	    List<Recipe> result = new ArrayList<>();
-	    
-	    try {
-	        pstmt = conn.prepareStatement(sql);
-	        rs = pstmt.executeQuery();
-	        while(rs.next()) {
-	        	Recipe recipe = new Recipe(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+	        	recipe.setImage(ImageUtils.byteToImage(rs.getBlob(7)));
 	        	recipe.setIngredients(getIngredientsOfRecipe(rs.getInt(1)));
 	        	recipe.setPreparationSteps(getPreparationStepsOfRecipe(rs.getInt(1)));
 	        	result.add(recipe);
@@ -739,7 +763,5 @@ public class DBController {
         	System.out.println(recipe);
         }
 	}
-
-	
 	
 }
