@@ -104,7 +104,12 @@ public class SetIngBox {
 				 //System.out.println(amount);
 			}catch(NumberFormatException exception) {
 				window.close();
-				AlertBox.display("Number Error", "You can just input the positive integer!");
+				AlertBox.display("Number Error", "You can just input the positive number!");
+				return;
+			}
+			if(amount<0) {
+				window.close();
+				AlertBox.display("Number Error", "You can just input the positive number!");
 				return;
 			}
 			this.result = new Ingredient(getName.getText() == null ? "" : getName.getText(), 

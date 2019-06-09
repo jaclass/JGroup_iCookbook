@@ -162,6 +162,10 @@ public class CreateViewController implements Initializable{
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
 		}
+		if(ret<=0) {
+			AlertBox.display("Number Error", "You can just input the positive integer!");
+			return ;
+		}
 		DBController.updateServeNum(selectedRecipe.getRecipeId(), ret);
 		this.serveNumLabel.setText(result);
 	}
@@ -188,6 +192,10 @@ public class CreateViewController implements Initializable{
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
 		}
+		if(ret<=0) {
+			AlertBox.display("Number Error", "You can just input the positive integer!");
+			return ;
+		}
 		DBController.updatePrepTime(selectedRecipe.getRecipeId(), ret);
 		this.preparationTimeLabel.setText(result);
 	}
@@ -213,6 +221,10 @@ public class CreateViewController implements Initializable{
 		}catch(NumberFormatException exception) {
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
+		}
+		if(ret<=0) {
+			AlertBox.display("Number Error", "You can just input the positive integer!");
+			return ;
 		}
 		DBController.updateCookTime(selectedRecipe.getRecipeId(), ret);
 		this.cookingTimeLabel.setText(result);
