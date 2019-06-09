@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import controller.db.DBController;
 import entity.User;
+
 /**
  * Test the methods about the users.
  * 
@@ -19,7 +20,7 @@ class UserDBTest {
 		User alice = new User("alice", "980102");
 		User alice2 = new User("alice", "980103");
 		DBController.insertUser(alice);
-		assertTrue(DBController.insertUser(alice2)==0);
+		assertTrue(DBController.insertUser(alice2) == 0);
 	}
 	
 	@Test
@@ -30,7 +31,6 @@ class UserDBTest {
 		DBController.insertUser(alicer);
 		assertTrue(DBController.loginUser(aliceer).equals("aliceer"));
 		assertTrue(DBController.loginUser(wrong_aliceer) == null);
-		 
 	}
 
 }

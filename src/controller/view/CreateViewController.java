@@ -57,8 +57,8 @@ public class CreateViewController implements Initializable{
 	@FXML private ImageView imageView;
 	
 	/**
-	 * Initiate the view
-	 * .
+	 * Initiate the view.
+	 * 
 	 * @param item Recipe.
 	 * @param username Username.
 	 */

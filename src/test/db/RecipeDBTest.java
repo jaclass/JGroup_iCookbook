@@ -1,9 +1,4 @@
-/**
- * 
- */
 package test.db;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +13,9 @@ import entity.User;
 import javafx.scene.image.Image;
 
 /**
- * @author 39873
+ * Test the methods about recipes with database.
+ * 
+ * @author JGroup
  *
  */
 class RecipeDBTest {
@@ -128,6 +125,7 @@ class RecipeDBTest {
 		
 		return recipe;
 	} 
+	
 	@Test
 	void test() throws FileNotFoundException {
 		CookBook cb = new CookBook("Chinese Cuisine");

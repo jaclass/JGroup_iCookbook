@@ -25,13 +25,6 @@ public class IngredientBoxController {
 	 * Delete one IngredientBox.
 	 * 
 	 * @param recipe_id Recipe id.
-	 * @param ing Deleted ingredient.
-	 * @param container Container of all ingredients.
-	 */
-	/**
-	 * Delete one IngredientBox.
-	 * 
-	 * @param recipe_id Recipe id.
 	 * @param ing Ingredient.
 	 * @param ings List of ingredients.
 	 * @param container Container.

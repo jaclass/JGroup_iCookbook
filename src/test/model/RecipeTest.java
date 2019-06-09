@@ -17,10 +17,10 @@ class RecipeTest {
 		recipe.addIngredient(new Ingredient("spring onion", 1.0, "tablespoon", "chopped"));
 		recipe.addIngredient(new Ingredient("chicken wings", 1.5, "kg"));
 		recipe.setServeNum(4);
-		assertTrue(recipe.getIngredients().get(0).getAmount()==2.0);
-		assertTrue(recipe.getIngredients().get(1).getAmount()==4.0);
-		assertTrue(recipe.getIngredients().get(2).getAmount()==2.0);
-		assertTrue(recipe.getIngredients().get(3).getAmount()==3.0);
+		assertTrue(recipe.getIngredients().get(0).getAmount() == 2.0);
+		assertTrue(recipe.getIngredients().get(1).getAmount() == 4.0);
+		assertTrue(recipe.getIngredients().get(2).getAmount() == 2.0);
+		assertTrue(recipe.getIngredients().get(3).getAmount() == 3.0);
 	}
 
 }
