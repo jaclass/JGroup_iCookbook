@@ -80,13 +80,13 @@ public class SetIngBox {
 		}
 		
 		VBox vbox1 = new VBox(2);
-		vbox1.getChildren().addAll(getName, new Label("Name"));
+		vbox1.getChildren().addAll(getName, new Label("*Name"));
 		vbox1.setAlignment(Pos.CENTER);
 		VBox vbox2 = new VBox(2);
-		vbox2.getChildren().addAll(getAmount, new Label("Amount"));
+		vbox2.getChildren().addAll(getAmount, new Label("*Amount"));
 		vbox2.setAlignment(Pos.CENTER);
 		VBox vbox3 = new VBox(2);
-		vbox3.getChildren().addAll(getUnit, new Label("Unit"));
+		vbox3.getChildren().addAll(getUnit, new Label("*Unit"));
 		vbox3.setAlignment(Pos.CENTER);
 		VBox vbox4 = new VBox(2);
 		vbox4.getChildren().addAll(getDes, new Label("Description"));
