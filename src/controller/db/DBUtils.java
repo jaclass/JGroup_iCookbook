@@ -15,9 +15,9 @@ import java.sql.Statement;
 public class DBUtils {
 	
 	public static final String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-	public static final String URL = "jdbc:mysql://127.0.0.1:3305/cookbook?serverTimezone=UTC";
+	public static final String URL = "jdbc:mysql://127.0.0.1:3306/cookbook?serverTimezone=UTC";
 	public static final String USERNAME = "root";
-	public static final String PASSWORD = "a299792458";
+	public static final String PASSWORD = "123456";
 	
 	// Loading the database driver.
 	static {

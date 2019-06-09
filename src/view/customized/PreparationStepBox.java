@@ -45,11 +45,10 @@ public class PreparationStepBox {
 		if(preps.size() == 0) {
 			// Create new step.
 			Button add_btn = new Button("Add your first step");
-			add_btn.setPrefWidth(200);
+			add_btn.setPrefWidth(205);
 			add_btn.setId("secondary-button");
 			HBox buttonBox = new HBox();
 			buttonBox.setMaxWidth(620);
-			buttonBox.setPrefWidth(560);
 			buttonBox.setAlignment(Pos.CENTER_RIGHT);
 			buttonBox.getChildren().add(add_btn);
 			this.container.getChildren().add(buttonBox);

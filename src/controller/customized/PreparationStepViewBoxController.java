@@ -29,7 +29,7 @@ public class PreparationStepViewBoxController {
 			
 			Label detaiLabel = new Label();
 			detaiLabel.setWrapText(true);
-			detaiLabel.setPrefWidth(560);
+			detaiLabel.setPrefWidth(620);
 			detaiLabel.setText(step.getStep()+ ". " + step.getDetail());
 			
 			container.getChildren().add(detaiLabel);

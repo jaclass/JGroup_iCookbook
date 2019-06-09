@@ -130,11 +130,16 @@ public class CreateViewController implements Initializable{
 		
 		// Try to update the image by loading the new image.
 		try {
-			BufferedImage bufferedImage = ImageIO.read(imagePath);
-			Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-			// Insert the new image to the database.
-			DBController.updateImage(selectedRecipe.getRecipeId(), image);
-			imageView.setImage(image);
+			if (imagePath == null) {
+				return;
+			} else {
+				BufferedImage bufferedImage = ImageIO.read(imagePath);
+				Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+				// Insert the new image to the database.
+				DBController.updateImage(selectedRecipe.getRecipeId(), image);
+				imageView.setImage(image);
+				return;
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -105,6 +105,11 @@
 	-fx-font-size: 13px;
 }
 
+/* Set the bold text. */
+#bold-text {
+	-fx-font-weight: bold;
+}
+
 /* The scroll bar. */
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track{

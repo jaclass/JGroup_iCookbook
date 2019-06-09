@@ -100,7 +100,6 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
         	
         	HBox buttonBox = new HBox(10);
         	buttonBox.setPrefWidth(460);
-        	buttonBox.setPadding(new Insets(10, 0, 0, 0));
         	buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         	buttonBox.getChildren().addAll(editButton, deleteButton);
         	
@@ -125,6 +124,7 @@ public class RecipeModifyListCell extends ListCell<Recipe>{
                 CreateViewController controller = loader.getController();
                 controller.initData(item,username);
         	});
+        	
         	deleteButton.setOnAction(e -> {
             	Boolean answer = ConfirmBox.display("Delete Recipe", "Are you sure to delete the recipe?");
             	

@@ -116,12 +116,11 @@ public class RecipeListCell extends ListCell<Recipe>{
         	});
         	
         	HBox buttonBox = new HBox(10);
-        	buttonBox.setPrefWidth(450);
-        	buttonBox.setPadding(new Insets(10, 0, 0, 0));
+        	buttonBox.setPrefWidth(460);
         	buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         	buttonBox.getChildren().addAll(viewButton);
         	
-        	VBox infoVBox = new VBox();
+        	VBox infoVBox = new VBox(5);
         	infoVBox.setAlignment(Pos.CENTER_LEFT);
         	infoVBox.getChildren().addAll(recipeNameLabel, authorHBox, amountHBox, buttonBox);
         	
