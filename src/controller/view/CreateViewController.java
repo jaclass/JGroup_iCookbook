@@ -146,6 +146,25 @@ public class CreateViewController implements Initializable{
 	}
 	
 	/**
+	 * When the button pushed, update the recipe name.
+	 * 
+	 * @param event
+	 * @throws IOException
+	 */
+	public void updateName(ActionEvent event) throws IOException {
+		String result = (new SetBox("Edit", "Edit the recipe name:", this.recipeNameLabel.getText())).display();
+		if(result == null) {
+			return;
+		}
+		if(result.trim().length() == 0) {
+			AlertBox.display("Edit Failure", "The recipe name cannot be empty!");
+			return;
+		}
+		DBController.updateRecipeName(selectedRecipe.getRecipeId(), result);
+		this.recipeNameLabel.setText(result);
+	}
+	
+	/**
 	 * When the button clicked, update serve number.
 	 * 
 	 * @param event
@@ -167,7 +186,7 @@ public class CreateViewController implements Initializable{
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
 		}
-		if(ret<=0) {
+		if(ret <= 0) {
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return ;
 		}
@@ -197,7 +216,7 @@ public class CreateViewController implements Initializable{
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
 		}
-		if(ret<=0) {
+		if(ret <= 0) {
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return ;
 		}
@@ -227,7 +246,7 @@ public class CreateViewController implements Initializable{
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return;
 		}
-		if(ret<=0) {
+		if(ret <= 0) {
 			AlertBox.display("Number Error", "You can just input the positive integer!");
 			return ;
 		}
@@ -243,7 +262,7 @@ public class CreateViewController implements Initializable{
 	 */
 	public void addIngredientClicked(ActionEvent event) throws IOException {
 		List<Ingredient> ings = IngredientBoxController.add(selectedRecipe.getRecipeId(), selectedRecipe.getIngredients(), ingredientBox);
-		if(ings!=null) {
+		if(ings != null) {
 			selectedRecipe.setIngredients(ings);
 		}
 	}

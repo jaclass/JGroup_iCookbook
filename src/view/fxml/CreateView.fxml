@@ -33,14 +33,18 @@
                               <Font name="System Bold" size="25.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </Label>
                         <VBox alignment="TOP_CENTER" prefWidth="640.0">
                            <children>
+                              <Button id="secondary-button" mnemonicParsing="false" onAction="#updateName" prefWidth="100.0" text="Edit Name">
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin></Button>
                               <ImageView fx:id="imageView" fitHeight="180.0" fitWidth="260.0" pickOnBounds="true" preserveRatio="true">
                                  <VBox.margin>
-                                    <Insets bottom="5.0" top="5.0" />
+                                    <Insets />
                                  </VBox.margin></ImageView>
                               <Button id="secondary-button" mnemonicParsing="false" onAction="#chooseImageButtonPushed" prefWidth="100.0" text="Choose Image">
                                  <VBox.margin>

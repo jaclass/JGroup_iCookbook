@@ -306,6 +306,33 @@ public class DBController {
 	    return ret;
 	}
 	
+    /**
+     * Update the recipe name.
+     * 
+     * @param recipe_id Id of Recipe Entity to be updated.
+     * @param name New recipe name.
+     * @return Updated rows.
+     */
+    public static int updateRecipeName(int recipe_id, String name) {
+		Connection conn = DBUtils.getMySqlConn();
+		PreparedStatement pstmt = null;
+		String sql = "update recipe set recipe_name=? where recipe_id=?";
+	    int ret = 0;
+	    
+	    try {
+	    	pstmt = conn.prepareStatement(sql);
+	    	pstmt.setString(1, name);
+	    	pstmt.setInt(2, recipe_id);
+	    	ret = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	    	DBUtils.close(pstmt, conn);
+	    }
+	    
+	    return ret;
+    }
+	
 	/**
 	 * Update serve number.
 	 * 
@@ -316,7 +343,6 @@ public class DBController {
 	public static int updateServeNum(int recipe_id, int num) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String sql = "update recipe set serve_num=? where recipe_id=?";
 	    int ret = 0;
 	    
@@ -328,7 +354,7 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(rs, pstmt, conn);
+	    	DBUtils.close(pstmt, conn);
 	    }
 	    
 	    return ret;
@@ -344,7 +370,6 @@ public class DBController {
 	public static int updatePrepTime(int recipe_id, int time) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String sql = "update recipe set preparation_time=? where recipe_id=?";
 	    int ret = 0;
 	    
@@ -356,7 +381,7 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(rs, pstmt, conn);
+	    	DBUtils.close(pstmt, conn);
 	    }
 	    
 	    return ret;
@@ -372,7 +397,6 @@ public class DBController {
 	public static int updateCookTime(int recipe_id, int time) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String sql = "update recipe set cooking_time=? where recipe_id=?";
 	    int ret = 0;
 	    
@@ -384,7 +408,7 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(rs, pstmt, conn);
+	    	DBUtils.close(pstmt, conn);
 	    }
 	    
 	    return ret;
@@ -400,7 +424,6 @@ public class DBController {
 	public static int updateImage(int recipe_id, Image image) {
 		Connection conn = DBUtils.getMySqlConn();
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		String sql = "update recipe set image=? where recipe_id=?";
 	    int ret = 0;
 	    
@@ -412,7 +435,7 @@ public class DBController {
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
-	    	DBUtils.close(rs, pstmt, conn);
+	    	DBUtils.close(pstmt, conn);
 	    }
 	    
 	    return ret;
