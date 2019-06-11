@@ -8,7 +8,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -23,17 +22,22 @@
                         <Insets />
                      </HBox.margin></TextField>
                   <Button mnemonicParsing="false" onAction="#searchButtonPushed" prefWidth="100.0" text="Search" />
-                  <Region prefHeight="25.0" prefWidth="110.0" />
-                  <Label fx:id="authorLabel" alignment="CENTER_RIGHT" onMouseClicked="#usernameMouseClicked" prefWidth="100.0" text="Label" underline="true">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></Label>
+                  <HBox alignment="CENTER_RIGHT" maxWidth="220.0" prefWidth="220.0">
+                     <children>
+                        <Label text="My account: " />
+                        <Label fx:id="authorLabel" alignment="CENTER_RIGHT" onMouseClicked="#usernameMouseClicked" text="Label" underline="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <ListView fx:id="recipeListView" prefHeight="425.0" prefWidth="660.0" />

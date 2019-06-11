@@ -99,23 +99,27 @@ public class SetIngBox {
 		okButton.setPrefWidth(50);
 		okButton.setOnAction(e -> {
 			double amount;
-			try {
-				 amount = Double.parseDouble(getAmount.getText().trim());
-				 //System.out.println(amount);
-			}catch(NumberFormatException exception) {
-				window.close();
-				AlertBox.display("Number Error", "You can just input the positive number!");
-				return;
+			if (getAmount.getText().trim().length() == 0) {
+				AlertBox.display("Number Error", "The amount number can't be empty!");
+			} else {
+				try {
+					amount = Double.parseDouble(getAmount.getText().trim());
+					//System.out.println(amount);
+				}catch(NumberFormatException exception) {
+					window.close();
+					AlertBox.display("Number Error", "You can just input the positive number!");
+					return;
+				}
+				if(amount<0) {
+					window.close();
+					AlertBox.display("Number Error", "You can just input the positive number!");
+					return;
+				}
+				this.result = new Ingredient(getName.getText() == null ? "" : getName.getText(), 
+						amount, 
+						getUnit.getText() == null ? "" : getUnit.getText(), 
+								getDes.getText() == null ? "" : getDes.getText());
 			}
-			if(amount<0) {
-				window.close();
-				AlertBox.display("Number Error", "You can just input the positive number!");
-				return;
-			}
-			this.result = new Ingredient(getName.getText() == null ? "" : getName.getText(), 
-										amount, 
-										getUnit.getText() == null ? "" : getUnit.getText(), 
-										getDes.getText() == null ? "" : getDes.getText());
 			//System.out.println(this.result.getAmount());
 			window.close();
 		});

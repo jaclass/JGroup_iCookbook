@@ -27,7 +27,7 @@ public class Main extends Application {
 	        Scene scene = new Scene(root);
 	        primaryStage.setScene(scene);
 	        
-			primaryStage.setTitle("JGroup's Cookbook");
+			primaryStage.setTitle("JGroup---iCookbook");
 			primaryStage.getIcons().add(new Image("/image/icon.png"));
 			primaryStage.setResizable(false);
 	        primaryStage.show();

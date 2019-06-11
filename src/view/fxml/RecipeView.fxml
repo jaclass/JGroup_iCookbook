@@ -19,15 +19,19 @@
             <HBox alignment="CENTER" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#backButtonPushed" prefWidth="100.0" text="Back Home" />
-                  <Region prefHeight="25.0" prefWidth="420.0" />
-                  <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" onMouseClicked="#usernameMouseClicked" prefWidth="100.0" text="Label" underline="true">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
+                  <HBox alignment="CENTER_RIGHT" maxWidth="530.0" prefWidth="530.0">
+                     <children>
+                        <Label text="My account: " />
+                        <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" onMouseClicked="#usernameMouseClicked" text="Label" underline="true">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <ScrollPane prefHeight="425.0" prefWidth="640.0">

@@ -131,6 +131,7 @@ public class UserOwnViewController implements Initializable{
 				Recipe insertedRecipe = new Recipe();
 				insertedRecipe.setRecipeName(get);
 				insertedRecipe.setAuthor(this.username);
+				insertedRecipe.setServeNum(1);
 				int inserted_id = DBController.insertRecipe(insertedRecipe);
 				
 				// This line gets the Stage information.
