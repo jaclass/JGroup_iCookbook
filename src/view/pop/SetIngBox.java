@@ -57,7 +57,7 @@ public class SetIngBox {
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(this.title);
 		window.setWidth(400);
-		window.setHeight(130);
+		window.setHeight(160);
 		window.setResizable(false);
 		window.getIcons().add(new Image("/image/icon.png"));
 		
@@ -126,7 +126,8 @@ public class SetIngBox {
 
 		VBox layout = new VBox(5);
 		layout.setAlignment(Pos.CENTER);
-		layout.getChildren().addAll(inputBox, okButton);
+		Label hinterLabel = new Label("Value with * is necessary to type in");
+		layout.getChildren().addAll(inputBox, hinterLabel ,okButton);
 
 		Scene scene = new Scene(layout);
 		scene.getStylesheets().add("/application/application.css");
